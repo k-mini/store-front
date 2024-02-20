@@ -1,24 +1,18 @@
 # store-front
 
-## Project setup
+## Project 개요
+
 ```
-npm install
+  기존 프로젝트에서 프론트 단을 Thymeleaf, JQuery로 구현했으나 
+  Vue.js로 마이그레이션 해보는 프로젝트 입니다.
 ```
 
-### Compiles and hot-reloads for development
+### 서버 기동
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 빌드
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
