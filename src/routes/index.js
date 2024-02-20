@@ -4,6 +4,9 @@ import BodyView from '../components/body/BodyView.vue';
 import SigninView from '../components/body/SigninView.vue';
 import SignupView from '../components/body/SignupView.vue';
 import BoardForm from '../components/body/BoardForm.vue';
+import BoardList from '../components/body/BoardList.vue';
+import BoardDetail from '../components/body/BoardDetail.vue';
+
 let router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -30,6 +33,21 @@ let router = createRouter({
             component: BoardForm,
             props : { title: '글 쓰기 페이지'}
         },
+        {
+            path: '/boards/:categoryName/:subCategoryName',
+            name: 'categories',
+            component: BoardList,
+        },
+        {
+            path: '/board/:categoryName/:subCategoryName/:id',
+            name: 'boardetail',
+            component: BoardDetail,
+            beforeEnter: (to, from, next) => {
+                console.log(to);
+                console.log(from);
+                next();
+            }
+        }
     ]
 });
 

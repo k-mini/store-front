@@ -16,15 +16,7 @@ export default {
   created() {
     // console.log(this.$router.getRoutes());
   },
-  computed : {
-    a() {
-      return 1;
-    }
-  },
   methods: {
-    postTest() {
-      console.log("post 테스트");
-    },
   },
 };
 </script>

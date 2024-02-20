@@ -285,7 +285,6 @@
 </template>
 
 <script>
-import { store } from '../../store/index';
 export default {
   props: ['title'],
   data() {
@@ -295,7 +294,7 @@ export default {
     }
   },
   created() {
-    store.commit('SET_TITLE', { title : this.title });
+    this.$store.commit('SET_TITLE', { title : this.title });
   },
   methods: {
     login() {
