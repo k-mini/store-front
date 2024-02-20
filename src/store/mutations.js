@@ -5,5 +5,8 @@ export default {
     },
     SET_TITLE(state, payload) {
         state.title = payload.title;
+    },
+    SET_PAGERESULTS(state, pageResult) {
+        state.pageResult = pageResult;
     }
 }

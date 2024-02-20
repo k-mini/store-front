@@ -378,6 +378,15 @@
 import { store } from '../../store/index';
 export default {
   props: ['title'],
+  data() {
+    return {
+      email: '',
+      username: '',
+      password: '',
+      passwordCheck: '',
+      file: null,
+    }
+  },
   created() {
     store.commit('SET_TITLE', { title : this.title });
   }

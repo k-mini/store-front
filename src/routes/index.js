@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import BodyView from '../components/body/BodyView.vue';
 import SigninView from '../components/body/SigninView.vue';
 import SignupView from '../components/body/SignupView.vue';
+import BoardForm from '../components/body/BoardForm.vue';
 let router = createRouter({
     history: createWebHistory(),
     routes: [
@@ -23,11 +24,19 @@ let router = createRouter({
             component: SignupView,
             props : { title: '회원가입 페이지'}
         },
+        {
+            path: "/board/:category/:subCategory/form",
+            name: "form",
+            component: BoardForm,
+            props : { title: '글 쓰기 페이지'}
+        },
     ]
 });
 
 // 예시
 // router.addRoute({ path:"/hello",name:"/hello", component: HelloView} );
+
+// 동적 라우팅 시작
 
 
 export { router }

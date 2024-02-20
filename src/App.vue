@@ -5,22 +5,31 @@
 </template>
 
 <script>
-import HeaderView from './components/header/HeaderView.vue';
-import FooterView from './components/footer/FooterView.vue';
+import HeaderView from "./components/header/HeaderView.vue";
+import FooterView from "./components/footer/FooterView.vue";
 
 export default {
-  components : {
+  components: {
     HeaderView,
     FooterView,
   },
   created() {
     // console.log(this.$router.getRoutes());
   },
-}
+  computed : {
+    a() {
+      return 1;
+    }
+  },
+  methods: {
+    postTest() {
+      console.log("post 테스트");
+    },
+  },
+};
 </script>
 
 <style>
-@import './assets/css/tailwind.css';
-@import './assets/css/animate.css';
-
+@import "./assets/css/tailwind.css";
+@import "./assets/css/animate.css";
 </style>

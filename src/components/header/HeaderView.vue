@@ -34,7 +34,7 @@
 import CategoryView from './category/CategoryView.vue';
 import WelcomeView from './authentication/WelcomeView.vue';
 import LoginView from './authentication/LoginView.vue';
-import BannerView from './BannerView.vue';
+import BannerView from './banner/BannerView.vue';
 
 export default {
   components: {

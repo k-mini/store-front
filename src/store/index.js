@@ -8,6 +8,7 @@ export const store = createStore({
         authenticated: false,
         categories: [],
         title: "",
+        pageResult: {},
     },
     getters,
     actions,

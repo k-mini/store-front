@@ -14,7 +14,13 @@ function fetchCategories() {
     return axios.get(`${config.baseUrl}/api/categories`);
 }
 
+// 게시물 요청 (GET)
+function fetchBoardLists(categoryName, subCategoryName) {
+    return axios.get(`${config.baseUrl}/api/boards/${categoryName}/${subCategoryName}`);
+}
+
 export { 
     postLogin,
     fetchCategories,
+    fetchBoardLists,
  };

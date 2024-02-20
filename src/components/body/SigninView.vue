@@ -15,9 +15,10 @@
                 <img src="../../assets/images/logo/logo.svg" alt="logo" />
               </a>
             </div>
-            <form action="/auth/signin" method="POST">
+            <form action="/auth/signin" method="POST" v-on:submit.prevent="login">
               <div class="mb-6">
                 <input
+                  v-model="email"
                   name="email"
                   type="email"
                   placeholder="Email"
@@ -26,6 +27,7 @@
               </div>
               <div class="mb-6">
                 <input
+                  v-model="password"
                   name="password"
                   type="password"
                   placeholder="Password"
@@ -286,9 +288,21 @@
 import { store } from '../../store/index';
 export default {
   props: ['title'],
+  data() {
+    return {
+      email: '',
+      password: '',
+    }
+  },
   created() {
     store.commit('SET_TITLE', { title : this.title });
   },
+  methods: {
+    login() {
+      console.log('login post 호출');
+      console.log(this.email, this.password);
+    },
+  }
 
 };
 </script>
