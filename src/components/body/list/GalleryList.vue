@@ -16,8 +16,7 @@
             class="block"
           >
             <img
-              th:src="${result.thumbnail != null} ?
-                                        '/images/' + ${result.thumbnail} : '/assets/images/blog/blog-02.jpg'"
+              :src="result.thumbnail != null ? '/images/' + result.thumbnail : require('@/assets/images/blog/blog-02.jpg')"
               alt="image"
               class="w-full transition group-hover:rotate-6 group-hover:scale-125"
               onerror="this.onerror=null; this.src='../../assets/images/blog/blog-02.jpg'"
@@ -84,6 +83,11 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
+    data() {
+      return {
+        // img: require('../../../assets/images')
+      }
+    },
     computed: {
         ...mapGetters(['getPageResult']),
         category() {

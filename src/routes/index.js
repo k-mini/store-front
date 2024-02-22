@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 // import HelloView from '../components/HelloView.vue';
-import BodyView from '../components/body/BodyView.vue';
+import BodyIndexView from '../components/body/BodyIndexView.vue';
 import SigninView from '../components/body/SigninView.vue';
 import SignupView from '../components/body/SignupView.vue';
 import BoardForm from '../components/body/BoardForm.vue';
@@ -13,7 +13,7 @@ let router = createRouter({
         { 
             path: "/",
             name: "index",
-            component: BodyView,
+            component: BodyIndexView,
         },
         {
             path: "/auth/signin",
@@ -35,7 +35,7 @@ let router = createRouter({
         },
         {
             path: '/boards/:categoryName/:subCategoryName',
-            name: 'categories',
+            name: 'boardList',
             component: BoardList,
         },
         {
@@ -55,6 +55,5 @@ let router = createRouter({
 // router.addRoute({ path:"/hello",name:"/hello", component: HelloView} );
 
 // 동적 라우팅 시작
-
 
 export { router }

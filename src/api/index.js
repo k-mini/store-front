@@ -15,8 +15,14 @@ function fetchCategories() {
 }
 
 // 게시물 요청 (GET)
-function fetchBoardLists(categoryName, subCategoryName) {
-    return axios.get(`${config.baseUrl}/api/boards/${categoryName}/${subCategoryName}`);
+function fetchBoardLists(categoryName, subCategoryName, searchType, searchKeyword, page) {
+    return axios.get(`${config.baseUrl}/api/boards/${categoryName}/${subCategoryName}`, {
+        params: {
+            searchType: searchType,
+            searchKeyword: searchKeyword,
+            page: page,
+        }
+    });
 }
 
 export { 
