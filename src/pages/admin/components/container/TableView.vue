@@ -16,11 +16,10 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table
-          class="table table-bordered"
-          id="dataTable"
-          width="100%"
-          cellspacing="0"
+        <DataTable
+          :columns="columns"
+          :options="options"
+          class="table table-hover table-striped"
         >
           <thead>
             <tr>
@@ -500,22 +499,51 @@
               <td>$112,000</td>
             </tr>
           </tbody>
-        </table>
+        </DataTable>
+
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import $ from "jquery";
+import DataTable from "datatables.net-vue3";
+import DataTablesCore from "datatables.net";
+// 부트스트랩 적용(오류남)
+// import DataTablesCore from 'datatables.net-bs4';
+
+const columns = [
+  { data: 'Name'},
+  { data: 'Position'},
+  { data: 'office'},
+  { data: 'Age' },
+  { data: 'Start date'},
+  { data: 'Salary'}
+]
+
+const options = {
+  responsive: true,
+  select: true,
+};
+
+DataTable.use(DataTablesCore);
 
 export default {
+  components: {
+    DataTable
+  },
+  data() {
+    return {
+      columns: columns,
+      options: options,
+    };
+  },
   mounted() {
-    // Call the dataTables jQuery plugin
-    $("#dataTable").DataTable();
   },
 };
 </script>
 
 <style>
+@import "bootstrap";
+@import "datatables.net-bs4";
 </style>
