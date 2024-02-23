@@ -500,7 +500,6 @@
             </tr>
           </tbody>
         </DataTable>
-
       </div>
     </div>
   </div>
@@ -511,6 +510,8 @@ import DataTable from "datatables.net-vue3";
 import DataTablesCore from "datatables.net";
 // 부트스트랩 적용(오류남)
 // import DataTablesCore from 'datatables.net-bs4';
+import 'datatables.net-select-bs4';
+// import 'datatables.net-responsive-bs4';
 
 const columns = [
   { data: 'Name'},
@@ -538,7 +539,8 @@ export default {
       options: options,
     };
   },
-  mounted() {
+  created() {
+      // DataTable.use(DataTablesCore);
   },
 };
 </script>
