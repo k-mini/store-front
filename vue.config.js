@@ -9,8 +9,8 @@ module.exports = defineConfig({
     },
     admin: {
       entry: 'src/pages/admin/main.js',
-      template: 'public/index2.html',
-      filename: 'index2.html'
+      template: 'public/adminIndex.html',
+      filename: 'adminIndex.html'
     }
   }
 
