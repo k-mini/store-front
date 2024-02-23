@@ -507,10 +507,12 @@
 
 <script>
 import DataTable from "datatables.net-vue3";
-import DataTablesCore from "datatables.net";
-// 부트스트랩 적용(오류남)
-// import DataTablesCore from 'datatables.net-bs4';
-import 'datatables.net-select-bs4';
+// import DataTablesCore from "datatables.net";
+// 부트스트랩 적용(4버전은 오류나서 5로 변경하니 동작됨)
+import DataTablesCore from 'datatables.net-bs5';
+// import 'datatables.net-searchpanes-bs4';
+// import 'datatables.net-select-bs5';
+// import 'datatables.net-select-bs4';
 // import 'datatables.net-responsive-bs4';
 
 const columns = [
@@ -547,5 +549,5 @@ export default {
 
 <style>
 @import "bootstrap";
-@import "datatables.net-bs4";
+@import "datatables.net-bs5";
 </style>
