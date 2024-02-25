@@ -3,9 +3,10 @@
     <div class="container">
       
       <gallery-list v-if="category === 'trade'"></gallery-list>
-      <common-list v-if="category === 'community'"></common-list>
+      <common-list v-if="category === 'community' && subCategory !== 'free'"></common-list>
+      <data-table-list v-if="category === 'community' && subCategory == 'free'"></data-table-list>
 
-      <page-navi></page-navi>
+      <page-navi v-if="category !== 'community' || subCategory !== 'free'"></page-navi>
 
     </div>
   </section>
@@ -15,6 +16,7 @@
 import { mapGetters, mapActions } from 'vuex'
 import GalleryList from './list/GalleryList.vue';
 import CommonList from './list/CommonList.vue';
+import DataTableList from './list/DataTableList.vue';
 import PageNavi from './page/PageNavi.vue';
 
 export default {
@@ -28,6 +30,7 @@ export default {
     components: {
       GalleryList,
       CommonList,
+      DataTableList,
       PageNavi,
     },
     computed: {
