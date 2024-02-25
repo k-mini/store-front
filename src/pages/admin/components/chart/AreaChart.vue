@@ -9,7 +9,15 @@ import { number_format } from '../../assets/js/common.js';
 export default {
   components: {},
   methods: {
-  },
+    addData(chart,  newDataSet) {
+      // chart.data.labels.push(label);
+      // chart.data.datasets.forEach((dataset) => {
+          // dataset.data.push(newData);
+      // });
+      chart.data.datasets.push(newDataSet);
+      chart.update();
+    },
+  },  
   mounted() {
     var Chart = this.$_Chart;
     
@@ -56,6 +64,24 @@ export default {
               25000, 40000,
             ],
           },
+          // {
+          //   label: "SampleData",
+          //   lineTension: 0.3,
+          //   backgroundColor: "rgba(241, 95, 95, 0.05)",
+          //   borderColor: "rgba(241, 95, 95, 1)",
+          //   pointRadius: 3,
+          //   pointBackgroundColor: "rgba(241, 95, 95, 1)",
+          //   pointBorderColor: "rgba(241, 95, 95, 1)",
+          //   pointHoverRadius: 3,
+          //   pointHoverBackgroundColor: "rgba(241, 95, 95, 1)",
+          //   pointHoverBorderColor: "rgba(241, 95, 95, 1)",
+          //   pointHitRadius: 10,
+          //   pointBorderWidth: 2,
+          //   data: [
+          //     0, 11000, 4000, 17000, 8000, 3000, 15000, 27000, 19000, 25000,
+          //     24000, 43000,
+          //   ],
+          // },
         ],
       },
       options: {
@@ -133,7 +159,28 @@ export default {
         },
       },
     });
-    console.log(myLineChart);
+    setTimeout(() =>{
+      // var label = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Sep","Oct","Nov","Dec",]
+      var newDataSet = {
+            label: "SampleData",
+            lineTension: 0.3,
+            backgroundColor: "rgba(241, 95, 95, 0.05)",
+            borderColor: "rgba(241, 95, 95, 1)",
+            pointRadius: 3,
+            pointBackgroundColor: "rgba(241, 95, 95, 1)",
+            pointBorderColor: "rgba(241, 95, 95, 1)",
+            pointHoverRadius: 3,
+            pointHoverBackgroundColor: "rgba(241, 95, 95, 1)",
+            pointHoverBorderColor: "rgba(241, 95, 95, 1)",
+            pointHitRadius: 10,
+            pointBorderWidth: 2,
+            data: [
+              0, 11000, 4000, 17000, 8000, 3000, 15000, 27000, 19000, 25000,
+              24000, 43000,
+            ],
+          }
+      this.addData(myLineChart,newDataSet);
+        }, 3000);
   },
 };
 </script>
