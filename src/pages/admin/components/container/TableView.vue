@@ -69,9 +69,8 @@ const columns = [
     // filter: 검색할 때 사용하는 데이터
     // type: type detection data => 아마 타입을 찾을때 사용하는 데이터일듯 
     // ex) sort할때 쓰는 함수에서 각 테이블의 row에서 sort타입의 데이터를 꺼내서 쓰는 것 같다.
-    render: function(data, type, row){
+    render: function(data, type){
       if (type === 'display') {
-        console.log(row);
         return '<a href="/admin">' + data + '</a>';
       }
 

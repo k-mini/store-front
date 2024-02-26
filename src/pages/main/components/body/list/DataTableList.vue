@@ -6,18 +6,6 @@
       :ajax="ajax"
       class="display"
     >
-      <!-- <thead
-        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-      >
-        <tr>
-          <th scope="col" class="px-6 py-3">게시물 번호</th>
-          <th scope="col" class="px-6 py-3">제목</th>
-          <th scope="col" class="px-6 py-3">작성자</th>
-          <th scope="col" class="px-6 py-3">조회 수</th>
-          <th scope="col" class="px-6 py-3">댓글 수</th>
-          <th scope="col" class="px-6 py-3">생성시간</th>
-        </tr>
-      </thead> -->
     </data-table>
   </div>
 </template>
@@ -29,9 +17,8 @@ import DataTablesCore from 'datatables.net-dt';
 
 const columns = [
   { data: 'id', title: "게시물 번호", footer: "게시물 번호",
-    render: function(data, type, row){
+    render: function(data, type){
       if (type === 'display') {
-        console.log(row);
         return '<a href="/admin">' + data + '</a>';
       }
       return data;

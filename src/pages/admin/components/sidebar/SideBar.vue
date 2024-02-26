@@ -21,7 +21,7 @@
     <li class="nav-item active">
       <router-link class="nav-link" :to="`/admin`">
         <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Dashboard</span></router-link
+        <span>대시보드</span></router-link
       >
     </li>
 
@@ -133,7 +133,7 @@
     <li class="nav-item">
       <router-link class="nav-link" :to="`/admin/charts`">
         <i class="fas fa-fw fa-chart-area"></i>
-        <span>Charts</span>
+        <span>Charts 예시</span>
       </router-link>
     </li>
 
@@ -141,7 +141,31 @@
     <li class="nav-item">
       <router-link class="nav-link" :to="`/admin/tables`">
         <i class="fas fa-fw fa-table"></i>
-        <span>Tables</span>
+        <span>Tables 예시</span>
+      </router-link>
+    </li>
+
+    <!-- 유저 관리 테이블 -->
+    <li class="nav-item">
+      <router-link class="nav-link" :to="`/admin/users`">
+        <i class="fas fa-fw fa-table"></i>
+        <span>유저 관리</span>
+      </router-link>
+    </li>
+
+    <!-- 게시물 관리 테이블 -->
+    <li class="nav-item">
+      <router-link class="nav-link" :to="`/admin/boards`">
+        <i class="fas fa-fw fa-table"></i>
+        <span>게시물 관리</span>
+      </router-link>
+    </li>
+
+    <!-- 댓글 관리 테이블 -->
+    <li class="nav-item">
+      <router-link class="nav-link" :to="`/admin/comments`">
+        <i class="fas fa-fw fa-table"></i>
+        <span>댓글 관리</span>
       </router-link>
     </li>
 
