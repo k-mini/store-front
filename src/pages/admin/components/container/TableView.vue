@@ -90,6 +90,21 @@ const options = {
   select: true,
   serverSide: true,
   processing: true,
+  initComplete: function(settings, json) {
+    console.log('initComplete 호출됨');
+    console.log(settings, json);
+  },
+  // search: {
+    // search: 'Tiger' // 초기 검색
+  // },
+  // searchCols: [
+  //   {search: "test1"}, 컬럼 0번에 초기필터
+  //   {search: "test2"}, 컬럼 1번에 초기필터
+  //   {search: "test3"}, 컬럼 2번에 초기필터
+  //   {search: "test4"}, 컬럼 3번에 초기필터
+  //   {search: "test5"}, 컬럼 4번에 초기필터
+  //   {search: "test6"}, 컬럼 5번에 초기필터
+  // ],
 };
 
 const ajax = {
@@ -127,8 +142,8 @@ const ajax = {
     // 함수형으로도 가능
     // 데이터베이스에 있는 총 개수
     recordsTotal: function(res) {
-      console.log("recoredsTotal 찾기");
-      console.log(res);
+      // console.log("recoredsTotal 찾기");
+      // console.log(res);
       return res.recordsTotal;
     },
     // 해당 조건으로 조회되는 총 개수
@@ -155,6 +170,6 @@ export default {
 </script>
 
 <style>
-@import "bootstrap";
+/* @import "bootstrap"; */
 @import "datatables.net-bs5";
 </style>

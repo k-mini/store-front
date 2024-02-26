@@ -25,7 +25,7 @@
 <script>
 import { mapGetters } from "vuex";
 import DataTable from "datatables.net-vue3";
-import DataTablesCore from 'datatables.net';
+import DataTablesCore from 'datatables.net-dt';
 
 const columns = [
   { data: 'id', title: "게시물 번호", footer: "게시물 번호",
@@ -65,16 +65,16 @@ const ajax = {
     console.log('보낼 데이터', newData);
     return newData;
   },
-  // dataSrc: function(res) {
-  //   console.log('받은 데이터', res);
-  //   return res.page.content;
-  // }
   dataSrc: {
     data: "page.content",
     draw: "draw",
     recordsTotal: "page.totalElements",
     recordsFiltered: "page.totalElements",
-  }
+  },
+  // dataSrc: function(res) {
+  //   console.log('받은 데이터 ',res);
+  //   return res.page.content;
+  // }
 }
 
 DataTable.use(DataTablesCore);
