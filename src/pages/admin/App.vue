@@ -51,6 +51,7 @@ export default {
     PageWrapper,
   },
   mounted() {
+    // console.log('App mount 완료')
   }
 };
 </script>

@@ -5,7 +5,11 @@
  * All rights reserved.
  * https://raw.github.com/gdsmith/jquery-easing/master/LICENSE
 */
-/* eslint-disable */
+import jQuery from 'jquery';
+import define from 'core-js';
+// /* eslint-disable */
+console.log('src 내의 easing 파일');
+
 (function (factory) {
 	if (typeof define === "function" && define.amd) {
 		define(['jquery'], function ($) {

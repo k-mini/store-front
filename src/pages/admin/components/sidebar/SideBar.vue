@@ -181,7 +181,9 @@
 
 <script>
 import $ from "jquery";
-import 'bootstrap';
+// import 'bootstrap';
+// import '../../assets/js/sb-admin-2';
+
 export default {
   mounted() {
     $("#sidebarToggle, #sidebarToggleTop").on("click", function () {
@@ -191,6 +193,7 @@ export default {
         $(".sidebar .collapse").collapse("hide");
       }
     });
+    // console.log('SideBar 마운트 완료');
   },
 };
 </script>
