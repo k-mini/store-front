@@ -186,6 +186,7 @@ import $ from "jquery";
 
 export default {
   mounted() {
+    console.log('SideBar 마운트 시작');
     $("#sidebarToggle, #sidebarToggleTop").on("click", function () {
       $("body").toggleClass("sidebar-toggled");
       $(".sidebar").toggleClass("toggled");
@@ -193,7 +194,7 @@ export default {
         $(".sidebar .collapse").collapse("hide");
       }
     });
-    // console.log('SideBar 마운트 완료');
+    console.log('SideBar 마운트 완료');
   },
 };
 </script>
