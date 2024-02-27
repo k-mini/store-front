@@ -29,13 +29,41 @@
 </template>
 
 <script>
+import $ from "jquery";
 import DataTable from "datatables.net-vue3";
+// import 'datatables.net-buttons/js/buttons.html5.mjs'
 import DataTablesCore from "datatables.net-bs5";
-// import 'datatables.net-buttons/js/buttons.html5';
+// import 'jszip';
+// import 'pdfmake';
+// 동작
+// import "datatables.net-buttons-dt";
+// 동작 안함
 // import "datatables.net-buttons-bs5";
+// import 'datatables.net-buttons/js/buttons.colVis.mjs';
+// import 'datatables.net-buttons/js/buttons.html5.mjs';
+// import 'datatables.net-buttons/js/buttons.print.mjs';
+// 동작 안함
 // import "datatables.net-select-bs5";
 
 const columns = [
+  {
+    data: '',
+    title: '체크 박스',
+    footer: '<input type="checkbox" name="checkall" id="checkall">',
+    render: function (data, type, row, meta) {
+      if (type === "display") {
+        // console.log(row);
+        if (data) {
+          return '<input type="checkbox" id="user' + meta.row + '" checked="'+ data + ' " >';
+        } else {
+          return '<input type="checkbox" id="user' + meta.row + '">';
+        }
+      }
+      return data
+    },
+    defaultContent: '',
+    className: "select-checkbox",
+  },
   {
     data: "id",
     title: "유저 번호",
@@ -44,7 +72,6 @@ const columns = [
       if (type === "display") {
         return '<a href="/admin">' + data + "</a>";
       }
-
       return data;
     },
   },
@@ -58,6 +85,18 @@ const columns = [
     title: "마지막 수정 날짜",
     footer: "마지막 수정 날짜",
   },
+  {
+    data: null,
+    title: "삭제",
+    footer: '<button type="button" class="btn btn-primary">선택 삭제</button>',
+    defaultContent: "사용 값이 아님",
+    render(data, type) {
+      if (type === "display") {
+        return '<button type="button" class="btn btn-primary">삭제</button>';
+      }
+      return data;
+    },
+  },
 ];
 
 const options = {
@@ -65,11 +104,31 @@ const options = {
   select: true,
   serverSide: true,
   processing: true,
-  footerCallback: function () {
-    // var api = this.api();
-    // api.column(0).search(5).draw();
+  columnDefs: [{ orderable: false, targets: [0] }],
+  initComplete: function () {
+    var api = this.api();
+
+    $("#checkall").prop("checked", false);
+    $("#checkall").on("click", function () {
+      var value = $(this).prop("checked");
+      api.cells('.select-checkbox')
+      .every(function (rowIdx, colIdx) {
+          api.cell(rowIdx, colIdx).data(value);
+      });
+    });
+
   },
-  columnDefs: [],
+  layout: {
+    // top2Start: function () {
+    //   return "<div></div>";
+    // },
+    // top2End: function () {
+    //   let div = document.createElement("div");
+    //   div.innerHTML =
+    //     '<button type="button" class="btn btn-primary">선택 삭제</button>';
+    //   return div;
+    // },
+  },
 };
 
 const ajax = {
@@ -89,8 +148,7 @@ const ajax = {
   },
 };
 
-DataTable
-  .use(DataTablesCore);
+DataTable.use(DataTablesCore);
 
 export default {
   components: {
