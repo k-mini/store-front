@@ -14,7 +14,11 @@
     >
       <ul class="blcok lg:flex">
         <li v-for="category in getCategories" :key= "category.categoryName" class="submenu-item group relative">
+
+
+
           <router-link
+            v-if="category.categoryName != `ALL`"
             v-bind:to="`/boards/${category.categoryName.toLowerCase()}/all`"
             class="relative mx-8 flex py-2 text-base text-dark after:absolute after:right-1 after:top-1/2 after:mt-[-2px] after:h-2 after:w-2 after:-translate-y-1/2 after:rotate-45 after:border-b-2 after:border-r-2 after:border-current group-hover:text-primary lg:mr-0 lg:ml-8 lg:inline-flex lg:py-6 lg:pl-0 lg:pr-4 lg:text-white lg:after:right-0 lg:group-hover:text-white lg:group-hover:opacity-70 xl:ml-12"
           >
@@ -32,6 +36,8 @@
             </router-link>
           </div>
         </li>
+
+
         <li v-if="getAuthenticated" class="submenu-item group relative">
           <p
             class="relative mx-8 flex py-2 text-base text-dark after:absolute after:right-1 after:top-1/2 after:mt-[-2px] after:h-2 after:w-2 after:-translate-y-1/2 after:rotate-45 after:border-b-2 after:border-r-2 after:border-current group-hover:text-primary lg:mr-0 lg:ml-8 lg:inline-flex lg:py-6 lg:pl-0 lg:pr-4 lg:text-white lg:after:right-0 lg:group-hover:text-white lg:group-hover:opacity-70 xl:ml-12"

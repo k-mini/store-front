@@ -10,6 +10,7 @@ export const store = createStore({
         categoryMap: {},
         title: "",
         pageResult: {},
+        pageDetail: {},
     },
     getters,
     actions,

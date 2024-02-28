@@ -39,7 +39,7 @@ const options = {
 };
 
 const ajax = {
-  url: "http://localhost:8080/api/boards/community/free",
+  url: "http://localhost:9090/api/boards/community/free",
   type: "GET",
   // contentType: "application/json",
   data: function(data) {

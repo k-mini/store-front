@@ -32,7 +32,7 @@
     <div class="sidebar-heading">Interface</div>
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a
         class="nav-link collapsed"
         href="#"
@@ -56,10 +56,10 @@
           <a class="collapse-item" href="cards.html">Cards</a>
         </div>
       </div>
-    </li>
+    </li> -->
 
     <!-- Nav Item - Utilities Collapse Menu -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a
         class="nav-link collapsed"
         href="#"
@@ -87,16 +87,72 @@
           <a class="collapse-item" href="utilities-other.html">Other</a>
         </div>
       </div>
+    </li> -->
+
+    <!-- 통계 메뉴-->
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        href="#"
+        data-toggle="collapse"
+        data-target="#collapseTwo"
+        aria-expanded="true"
+        aria-controls="collapseTwo"
+      >
+        <i class="fas fa-fw fa-cog"></i>
+        <span>통계</span>
+      </a>
+      <div
+        id="collapseTwo"
+        class="collapse"
+        aria-labelledby="headingTwo"
+        data-parent="#accordionSidebar"
+      >
+        <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">통계</h6>
+          <a class="collapse-item" href="buttons.html">게시물 통계</a>
+          <a class="collapse-item" href="buttons.html">유저 통계</a>
+          <a class="collapse-item" href="buttons.html">댓글 통계</a>
+        </div>
+      </div>
+    </li>
+
+    <!-- 설정 메뉴 -->
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        href="#"
+        data-toggle="collapse"
+        data-target="#collapseUtilities"
+        aria-expanded="true"
+        aria-controls="collapseUtilities"
+      >
+        <i class="fas fa-fw fa-wrench"></i>
+        <span>설정 및 관리</span>
+      </a>
+      <div
+        id="collapseUtilities"
+        class="collapse"
+        aria-labelledby="headingUtilities"
+        data-parent="#accordionSidebar"
+      >
+        <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">권한</h6>
+          <a class="collapse-item" href="#">권한 설정 및 관리</a>
+          <h6 class="collapse-header">아이피</h6>
+          <a class="collapse-item" href="#">IP 설정 및 관리</a>
+        </div>
+      </div>
     </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider" />
 
     <!-- Heading -->
-    <div class="sidebar-heading">Addons</div>
+    <!-- <div class="sidebar-heading">Addons</div> -->
 
     <!-- Nav Item - Pages Collapse Menu -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a
         class="nav-link collapsed"
         href="#"
@@ -127,23 +183,23 @@
           <a class="collapse-item" href="blank.html">Blank Page</a>
         </div>
       </div>
-    </li>
+    </li> -->
 
     <!-- Nav Item - Charts -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <router-link class="nav-link" :to="`/admin/charts`">
         <i class="fas fa-fw fa-chart-area"></i>
         <span>Charts 예시</span>
       </router-link>
-    </li>
+    </li> -->
 
     <!-- Nav Item - Tables -->
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <router-link class="nav-link" :to="`/admin/tables`">
         <i class="fas fa-fw fa-table"></i>
         <span>Tables 예시</span>
       </router-link>
-    </li>
+    </li> -->
 
     <!-- 유저 관리 테이블 -->
     <li class="nav-item">
@@ -186,7 +242,7 @@ import $ from "jquery";
 
 export default {
   mounted() {
-    console.log('SideBar 마운트 시작');
+    // console.log('SideBar 마운트 시작');
     $("#sidebarToggle, #sidebarToggleTop").on("click", function () {
       $("body").toggleClass("sidebar-toggled");
       $(".sidebar").toggleClass("toggled");
@@ -194,7 +250,7 @@ export default {
         $(".sidebar .collapse").collapse("hide");
       }
     });
-    console.log('SideBar 마운트 완료');
+    // console.log('SideBar 마운트 완료');
   },
 };
 </script>

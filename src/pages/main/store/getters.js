@@ -15,4 +15,7 @@ export default {
     getTitle(state) {
         return state.title;
     },
+    getPageDetail(state){
+        return state.pageDetail;
+    },
 }

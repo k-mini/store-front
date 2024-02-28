@@ -13,14 +13,12 @@
         <div class="mb-8 overflow-hidden rounded">
           <router-link
             :to="`/board/${category}/${subCategory}/${result.id}`"
-            class="block"
-          >
+            class="block">
             <img
               :src="result.thumbnail != null ? '/images/' + result.thumbnail : require('@/pages/main/assets/images/blog/blog-02.jpg')"
               alt="image"
               class="w-full transition group-hover:rotate-6 group-hover:scale-125"
-              onerror="this.onerror=null; this.src='../../assets/images/blog/blog-02.jpg'"
-            />
+              onerror="this.onerror=null; this.src='../../assets/images/blog/blog-02.jpg'"/>
           </router-link>
         </div>
         <div>

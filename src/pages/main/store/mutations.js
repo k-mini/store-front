@@ -12,4 +12,7 @@ export default {
     SET_CATEGORYMAP(state, map) {
         state.categoryMap = map;
     },
+    SET_PAGE_DETAIL(state, pageDetail) {
+        state.pageDetail = pageDetail
+    }
 }

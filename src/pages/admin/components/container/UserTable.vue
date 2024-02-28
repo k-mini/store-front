@@ -31,32 +31,27 @@
 <script>
 import $ from "jquery";
 import DataTable from "datatables.net-vue3";
-// import 'datatables.net-buttons/js/buttons.html5.mjs'
 import DataTablesCore from "datatables.net-bs5";
-// import 'jszip';
-// import 'pdfmake';
 // 동작
 // import "datatables.net-buttons-dt";
 // 동작 안함
 // import "datatables.net-buttons-bs5";
-// import 'datatables.net-buttons/js/buttons.colVis.mjs';
-// import 'datatables.net-buttons/js/buttons.html5.mjs';
-// import 'datatables.net-buttons/js/buttons.print.mjs';
 // 동작 안함
 // import "datatables.net-select-bs5";
+import {deleteUser} from '../../api/userApi';
 
 const columns = [
   {
     data: '',
     title: '체크 박스',
     footer: '<input type="checkbox" name="checkall" id="checkall">',
-    render: function (data, type, row, meta) {
+    render: function (data, type, row) {
       if (type === "display") {
         // console.log(row);
         if (data) {
-          return '<input type="checkbox" id="user' + meta.row + '" checked="'+ data + ' " >';
+          return `<input type="checkbox" id="user${row.id}" checked="${data}">`;
         } else {
-          return '<input type="checkbox" id="user' + meta.row + '">';
+          return `<input type="checkbox" id="user${row.id}">`;
         }
       }
       return data
@@ -88,11 +83,11 @@ const columns = [
   {
     data: null,
     title: "삭제",
-    footer: '<button type="button" class="btn btn-primary">선택 삭제</button>',
-    defaultContent: "사용 값이 아님",
-    render(data, type) {
+    footer: `<button type="button" class="btn btn-primary"> 선택 삭제 </button>`,
+    defaultContent: '',
+    render(data, type, row) {
       if (type === "display") {
-        return '<button type="button" class="btn btn-primary">삭제</button>';
+        return `<button type="button" class="btn btn-primary" id="user-delete-button-${row.id}" >삭제</button>`;
       }
       return data;
     },
@@ -105,9 +100,10 @@ const options = {
   serverSide: true,
   processing: true,
   columnDefs: [{ orderable: false, targets: [0] }],
-  initComplete: function () {
+  drawCallback: function () {
     var api = this.api();
 
+    // 전체 선택 이벤트 등록
     $("#checkall").prop("checked", false);
     $("#checkall").on("click", function () {
       var value = $(this).prop("checked");
@@ -117,6 +113,21 @@ const options = {
       });
     });
 
+    // 개별 버튼 유저 삭제 이벤트 등록
+    api.column(-1)
+      .data()
+      .each(function(row){
+        $(`#user-delete-button-${row.id}`).on("click", function() {
+          // console.log(this);
+          deleteUser(row.id)
+            .then(() => { 
+              api.draw();
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      })
   },
   layout: {
     // top2Start: function () {
@@ -132,7 +143,7 @@ const options = {
 };
 
 const ajax = {
-  url: "http://localhost:8080/api/admin/users",
+  url: "http://localhost:9090/api/admin/users",
   type: "GET",
   // contentType: "application/json",
   data: function (data) {

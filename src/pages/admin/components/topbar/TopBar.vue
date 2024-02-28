@@ -241,7 +241,7 @@
           aria-expanded="false"
         >
           <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-            >Douglas McGee</span
+            >Kmini</span
           >
           <img
             class="img-profile rounded-circle"
@@ -255,11 +255,11 @@
         >
           <a class="dropdown-item" href="#">
             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-            Profile
+            프로필 보기
           </a>
           <a class="dropdown-item" href="#">
             <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-            Settings
+            설정
           </a>
           <a class="dropdown-item" href="#">
             <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -273,7 +273,7 @@
             data-target="#logoutModal"
           >
             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-            Logout
+            로그아웃
           </a>
         </div>
       </li>

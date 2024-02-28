@@ -57,7 +57,7 @@
   };
   
   const ajax = {
-    url: "http://localhost:8080/api/admin/comments",
+    url: "http://localhost:9090/api/admin/comments",
     type: "GET",
     data: function (data) {
       data.page = data.start / data.length

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const config = {
-    baseUrl: 'http://localhost:8080'
+    baseUrl: 'http://localhost:9090'
 };
 
 // 로그인 요청 (POST)
@@ -25,8 +25,20 @@ function fetchBoardLists(categoryName, subCategoryName, searchType, searchKeywor
     });
 }
 
+// 게시물 상세정보 요청 (GET)
+function fetchBoardDetail(categoryName, subCategoryName, boardId) {
+    return axios.get(`${config.baseUrl}/api/board/${categoryName}/${subCategoryName}/${boardId}`,{
+        param: {
+            categoryName: categoryName,
+            subCategoryName: subCategoryName,
+            boardId: boardId,
+        }
+    });
+}
+
 export { 
     postLogin,
     fetchCategories,
     fetchBoardLists,
+    fetchBoardDetail,
  };

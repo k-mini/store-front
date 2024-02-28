@@ -39,14 +39,14 @@ let router = createRouter({
             component: BoardList,
         },
         {
-            path: '/board/:categoryName/:subCategoryName/:id',
+            path: '/board/:categoryName/:subCategoryName/:boardId',
             name: 'boardetail',
             component: BoardDetail,
-            beforeEnter: (to, from, next) => {
-                console.log(to);
-                console.log(from);
-                next();
-            }
+            // beforeEnter: (to, from, next) => {
+            //     console.log(to);
+            //     console.log(from);
+            //     next();
+            // },
         }
     ]
 });

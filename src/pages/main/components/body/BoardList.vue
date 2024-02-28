@@ -73,13 +73,13 @@ export default {
       next();
     },
     created() {
-      // this.GET_BOARDLISTS({ 
-      //   category: this.category, 
-      //   subCategory: this.subCategory,
-      //   searchType: this.searchType,
-      //   searchKeyword: this.searchKeyword,
-      //   page: this.pageNumber,
-      // });
+      this.GET_BOARDLISTS({ 
+        category: this.category, 
+        subCategory: this.subCategory,
+        searchType: this.searchType,
+        searchKeyword: this.searchKeyword,
+        page: this.pageNumber,
+      });
     },
 };
 </script>

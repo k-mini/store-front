@@ -1,17 +1,30 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true,
-  pages: {
-    default: {
-      entry: 'src/pages/main/main.js',
-      template: 'public/index.html',
-      filename: 'index.html'
+  devServer: {
+    // http:localhost:9090/images/** 요청을 받으면 devServer에서 http://localhost:8080으로 대신 요청
+    proxy: {
+      '/images': {
+        target: 'http://localhost:8080',
+        changeOrigin: true
+      },
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true
+      }
     },
-    admin: {
-      entry: 'src/pages/admin/main.js',
-      template: 'public/adminIndex.html',
-      filename: 'adminIndex.html'
+  },
+    pages: {
+      default: {
+        entry: 'src/pages/main/main.js',
+        template: 'public/index.html',
+        filename: 'index.html'
+      },
+      admin: {
+        entry: 'src/pages/admin/main.js',
+        template: 'public/adminIndex.html',
+        filename: 'adminIndex.html'
+      }
     }
-  }
 
-})
+  })
