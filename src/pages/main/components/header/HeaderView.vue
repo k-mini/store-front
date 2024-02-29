@@ -17,9 +17,9 @@
           <category-view></category-view>
 
           <!-- 로그인 성공 -->
-          <welcome-view></welcome-view>
+          <login-view v-if="getAuthentication"></login-view>
           <!-- 로그인 실패 -->
-          <login-view></login-view>
+          <anonymous-view v-else></anonymous-view>
 
         </div>
       </div>
@@ -32,21 +32,24 @@
 
 <script>
 import CategoryView from './category/CategoryView.vue';
-import WelcomeView from './authentication/WelcomeView.vue';
 import LoginView from './authentication/LoginView.vue';
+import AnonymousView from './authentication/AnonymousView.vue';
 import BannerView from './banner/BannerView.vue';
 
 export default {
   components: {
     CategoryView,
-    WelcomeView,
+    AnonymousView,
     LoginView, 
     BannerView,
   },
   computed : {
     getPath() {
       return this.$route.path;
-    }
+    },
+    getAuthentication() {
+      return this.$store.state.authentication;
+    },
   },
 };
 </script>

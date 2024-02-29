@@ -14,5 +14,8 @@ export default {
     },
     SET_PAGE_DETAIL(state, pageDetail) {
         state.pageDetail = pageDetail
+    },
+    SET_AUTHENTICATION(state, authentication) {
+        state.authentication = authentication;
     }
 }

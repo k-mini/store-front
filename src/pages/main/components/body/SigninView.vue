@@ -15,7 +15,7 @@
                 <img src="../../assets/images/logo/logo.svg" alt="logo" />
               </a>
             </div>
-            <form action="/auth/signin" method="POST" v-on:submit.prevent="login">
+            <form method="POST" v-on:submit.prevent="processLogin">
               <div class="mb-6">
                 <input
                   v-model="email"
@@ -285,6 +285,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
 export default {
   props: ['title'],
   data() {
@@ -293,16 +294,27 @@ export default {
       password: '',
     }
   },
-  created() {
-    this.$store.commit('SET_TITLE', { title : this.title });
+  coumputed: {
+    ...mapGetters(['getAuthentication']),
   },
   methods: {
-    login() {
+    ...mapActions(['PROCESS_LOGIN']),
+    processLogin() {
       console.log('login post 호출');
       console.log(this.email, this.password);
+      this.PROCESS_LOGIN({ email: this.email, password: this.password})
+        .then(()=>{
+          console.log('로그인 성공');
+          this.$router.push('/');
+        })
+        .catch((err)=>{
+          console.log(err);
+        });
     },
-  }
-
+  },
+  created() {
+    this.$store.commit('SET_TITLE', this.title);
+  },
 };
 </script>
 

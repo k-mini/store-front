@@ -10,8 +10,11 @@
           >
             <!-- 작성자가 올린 그림 -->
             <img
-              :src="getPageDetail.boardThumbnail != null
-                ? '/images/' + getPageDetail.boardThumbnail : require('@/pages/main/assets/images/blog/blog-details-01.jpg')"
+              :src="
+                getPageDetail.boardThumbnail != null
+                  ? '/images/' + getPageDetail.boardThumbnail
+                  : require('@/pages/main/assets/images/blog/blog-details-01.jpg')
+              "
               alt="image"
               class="h-full w-full object-cover object-center"
             />
@@ -23,15 +26,18 @@
                   <div class="mr-4 h-10 w-10 overflow-hidden rounded-full">
                     <!-- 회원 썸네일 -->
                     <img
-                      :src="getPageDetail.userThumbnail != null ?
-                                'images/' + getPageDetail.userThumbnail : '/assets/images/blog/author-01.png'"
+                      :src="
+                        getPageDetail.userThumbnail != null
+                          ? 'images/' + getPageDetail.userThumbnail
+                          : '/assets/images/blog/author-01.png'
+                      "
                       alt="image"
                       class="w-full"
                     />
                   </div>
                   <p class="text-base font-medium text-white">
                     <a
-                      :text="getPageDetail.username"
+                      :text="getPageDetail?.username"
                       href="javascript:void(0)"
                       class="text-white hover:opacity-70"
                     >
@@ -79,7 +85,7 @@
                         />
                       </svg>
                     </span>
-                    {{  getPageDetail.createdDate  }}
+                    {{ getPageDetail.createdDate }}
                   </p>
 
                   <p
@@ -103,7 +109,7 @@
                         />
                       </svg>
                     </span>
-                    {{  getPageDetail.commentTotalCount  }}
+                    {{ getPageDetail.commentTotalCount }}
                   </p>
                   <p class="flex items-center text-sm font-medium text-white">
                     <span class="mr-3">
@@ -121,7 +127,7 @@
                         />
                       </svg>
                     </span>
-                    {{  getPageDetail.views  }}
+                    {{ getPageDetail.views }}
                   </p>
                 </div>
               </div>
@@ -135,21 +141,21 @@
                 <h2
                   v-text="getPageDetail.title"
                   class="wow fadeInUp mb-6 text-[26px] font-bold leading-snug text-dark sm:text-3xl sm:leading-snug md:text-4xl md:leading-snug"
-                  data-wow-delay=".1s">
-                </h2>
+                  data-wow-delay=".1s"
+                ></h2>
 
                 <img
                   v-if="getPageDetail.boardThumbnail != null"
-                  th:src="'/images/' + getPageDetail.boardThumbnail"
+                  :src="'/images/' + getPageDetail.boardThumbnail"
                   alt="image"
-                  class="h-full w-1/2 object-cover object-center"/>
+                  class="h-full w-1/2 object-cover object-center"
+                />
 
                 <p
                   v-text="getPageDetail.content"
                   class="wow fadeInUp mb-8 text-base leading-relaxed text-body-color"
                   data-wow-delay=".1s"
-                >
-                </p>
+                ></p>
 
                 <!-- 댓글 영역 시작 -->
                 <div id="comment-box" class="max-w-2xl mx-auto px-4">
@@ -158,40 +164,49 @@
                       id="comment-total"
                       class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white"
                     >
-                      댓글 ({{  getPageDetail.commentTotalCount  }})
+                      댓글 ({{ getPageDetail.commentTotalCount }})
                     </h2>
                     <div>
                       <button
+                        v-if="
+                          getPageDetail.writerId !== getAuthentication.userId &&
+                          getPageDetail.tradePossible == true
+                        "
                         id="board-trade"
-                        th:if="getPageDetail.writerId != #authentication.principal.user.id && getPageDetail.tradePossible == true"
                         type="button"
                         class="mb-5 inline-block rounded bg-primary py-1 px-4 text-center text-xs font-semibold leading-loose text-white"
                       >
                         거래 신청
                       </button>
-                      <a
+                      <router-link
+                        v-if="
+                          getPageDetail.writerId === getAuthentication.userId
+                        "
                         id="board-update"
-                        :href="`/board/trade/${subCategory}/${getPageDetail.id}/form`"
-                        th:if="getPageDetail.writerId == #authentication.principal.user.id"
+                        :to="`/board/trade/${subCategory}/${getPageDetail.id}/form`"
                         type="button"
                         class="mb-5 inline-block rounded bg-primary py-1 px-4 text-center text-xs font-semibold leading-loose text-white"
                       >
                         게시물 수정
-                      </a>
+                      </router-link>
                       <button
+                        v-if="
+                          getPageDetail.writerId === getAuthentication.userId
+                        "
                         id="board-delete"
-                        th:if="getPageDetail.writerId == #authentication.principal.user.id"
                         type="button"
                         class="mb-5 inline-block rounded bg-primary py-1 px-4 text-center text-xs font-semibold leading-loose text-white"
                       >
                         게시물 삭제
                       </button>
-                      <button
-                        type="button"
-                        class="mb-5 inline-block rounded bg-primary py-1 px-4 text-center text-xs font-semibold leading-loose text-white"
-                      >
-                        <a href="javascript:window.history.back();"> 목록 </a>
-                      </button>
+                      <router-link :to="`/boards/${category}/${subCategory}`">
+                        <button
+                          type="button"
+                          class="mb-5 inline-block rounded bg-primary py-1 px-4 text-center text-xs font-semibold leading-loose text-white"
+                        >
+                          목록
+                        </button>
+                      </router-link>
                     </div>
                   </div>
                   <div class="mb-6">
@@ -206,7 +221,7 @@
                       ></textarea>
                     </div>
                     <button
-                      id="comment-save"
+                      @click="this.SAVE_COMMENT({ boardId: getPageDetail.id})"
                       type="button"
                       class="mb-5 inline-block rounded bg-primary py-1 px-4 text-center text-xs font-semibold leading-loose text-white"
                     >
@@ -214,8 +229,10 @@
                     </button>
                   </div>
 
+                  <!-- 부모 댓글 시작 -->
                   <div
-                    v-for="comment in getPageDetail.comments" :key="comment.id"
+                    v-for="comment in getPageDetail.comments"
+                    :key="comment.id"
                     :id="`comment-${comment.id}`"
                     class="mb-6 text-base bg-white rounded-lg dark:bg-gray-900"
                   >
@@ -224,7 +241,7 @@
                         <p
                           class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"
                         >
-                          {{  comment.commentUserName  }}
+                          {{ comment.commentUserName }}
                         </p>
                         <p class="text-sm text-gray-600 dark:text-gray-400">
                           <time
@@ -232,23 +249,33 @@
                             datetime="2022-02-08"
                             title="February 8th, 2022"
                           >
-                            {{  comment.createdDate  }}
+                            {{ comment.createdDate }}
                           </time>
                         </p>
                       </div>
 
                       <div class="flex items-center">
                         <button
-                          th:commentid="comment.id"
-                          th:onclick="updateToggle(this.getAttribute('commentid'))"
-                          th:if="${#authentication.principal.user.id == comment.commentUserId}"
+                          @click="updateToggle(comment.id)"
+                          v-if="
+                            `${
+                              getAuthentication.userId == comment.commentUserId
+                            }`
+                          "
                           class="inline-flex items-center mr-3 text-sm text-gray-900 hover:underline dark:text-white font-semibold"
                         >
                           수정
                         </button>
                         <button
-                          th:onclick="deleteComment([[${comment.id}]])"
-                          th:if="${#authentication.principal.user.id == comment.commentUserId}"
+                          @click="this.DELETE_COMMENT({
+                            commentId : comment.id,
+                            commentTotalCount: getPageDetail.commentTotalCount
+                          })"
+                          v-if="
+                            `${
+                              getAuthentication.userId == comment.commentUserId
+                            }`
+                          "
                           class="inline-flex items-center mr-3 text-sm text-gray-900 hover:underline dark:text-white font-semibold"
                         >
                           삭제
@@ -260,7 +287,7 @@
                       :id="`content-${comment.id}`"
                       class="text-gray-500 py-4 dark:text-gray-400"
                     >
-                      {{  comment.content  }}
+                      {{ comment.content }}
                     </p>
 
                     <div class="flex items-center py-4">
@@ -289,7 +316,10 @@
                         ></textarea>
                       </div>
                       <button
-                        @click="updateComment(result.id, comment.id)"
+                        @click="this.UPDATE_COMMENT({
+                          boardId: getPageDetail.id,
+                          commentId: comment.id
+                        })"
                         type="button"
                         class="mb-5 inline-block rounded bg-primary py-1 px-4 text-center text-xs font-semibold leading-loose text-white"
                       >
@@ -300,8 +330,9 @@
 
                     <!-- 대댓글 시작 -->
                     <div
-                      v-for="reply in comment.replies" :key="reply.id"
-                      :id="`comment-${reply.replyId}`"
+                      v-for="reply in comment.replies"
+                      :key="reply.id"
+                      :id="`comment-${reply.id}`"
                       class="py-4 lg:ml-6 text-base bg-white rounded-lg dark:bg-gray-900"
                     >
                       <div class="flex justify-between items-center mb-2">
@@ -309,7 +340,7 @@
                           <p
                             class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold"
                           >
-                            {{  reply.replyUserName  }}
+                            {{ reply.commentUserName }}
                           </p>
                           <p class="text-sm text-gray-600 dark:text-gray-400">
                             <time
@@ -317,22 +348,35 @@
                               datetime="2022-02-08"
                               title="February 8th, 2022"
                             >
-                              {{  reply.createdDate  }}
+                              {{ reply.createdDate }}
                             </time>
                           </p>
                         </div>
 
                         <div class="flex items-center">
                           <button
-                            @click="updateToggle(reply.replyId)"
-                            th:if="${#authentication.principal.user.id == comment.commentUserId}"
+                            @click="updateToggle(reply.id)"
+                            v-if="
+                              `${
+                                getAuthentication.userId ==
+                                comment.commentUserId
+                              }`
+                            "
                             class="inline-flex items-center mr-3 text-sm text-gray-900 hover:underline dark:text-white font-semibold"
                           >
                             수정
                           </button>
                           <button
-                            @click="deleteComment(reply.replyId)"
-                            th:if="${#authentication.principal.user.id == comment.commentUserId}"
+                            @click="this.DELETE_COMMENT({
+                             commentId: reply.id,
+                             commentTotalCount: getPageDetail.commentTotalCount 
+                            })"
+                            v-if="
+                              `${
+                                getAuthentication.userId ==
+                                comment.commentUserId
+                              }`
+                            "
                             class="inline-flex items-center mr-3 text-sm text-gray-900 hover:underline dark:text-white font-semibold"
                           >
                             삭제
@@ -343,11 +387,11 @@
                         :id="`content-${comment.id}`"
                         class="text-gray-500 py-4 dark:text-gray-400"
                       >
-                        {{  reply.content  }}
+                        {{ reply.content }}
                       </p>
                       <!-- 대댓글 수정 바 -->
                       <div
-                        :id="`update-bar-${reply.replyId}`"
+                        :id="`update-bar-${reply.id}`"
                         class="mb-6 lg:ml-6"
                         style="display: none"
                       >
@@ -355,14 +399,17 @@
                           class="py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700"
                         >
                           <textarea
-                            :id="`update-content-${reply.replyId}`"
+                            :id="`update-content-${reply.id}`"
                             rows="3"
                             class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
                             placeholder="수정 내용.."
                           ></textarea>
                         </div>
                         <button
-                          @click="updateComment(result.id, reply.replyId)"
+                          @click="this.UPDATE_COMMENT({
+                            boardId: getPageDetail.id,
+                            commentId: reply.id
+                          })"
                           type="button"
                           class="mb-5 inline-block rounded bg-primary py-1 px-4 text-center text-xs font-semibold leading-loose text-white"
                         >
@@ -390,7 +437,10 @@
                         ></textarea>
                       </div>
                       <button
-                        @click="saveReply(result.id, comment.id)"
+                        @click="this.SAVE_REPLY_COMMENT({
+                          boardId: getPageDetail.id,
+                          topCommentId: comment.id,
+                        })"
                         type="button"
                         class="mb-5 inline-block rounded bg-primary py-1 px-4 text-center text-xs font-semibold leading-loose text-white"
                       >
@@ -399,6 +449,7 @@
                     </div>
                     <!-- 대댓글 작성 바 종료 -->
                   </div>
+                  <!-- 부모 댓글 종료 -->
                 </div>
                 <!-- 댓글 영역 종료 -->
 
@@ -615,16 +666,35 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import {
+  replyToggle,
+  updateToggle,
+} from "../../api/commentApi";
 
 export default {
   data() {
-    return {};
+    return {
+
+    };
   },
   computed: {
-    ...mapGetters(["getPageDetail"]),
+    ...mapGetters(["getPageDetail", "getAuthentication"]),
+    category() {
+      return this.$route.params.categoryName;
+    },
+    subCategory() {
+      return this.$route.params.subCategoryName;
+    },
   },
   methods: {
-    ...mapActions(["GET_PAGE_DETAIL"]),
+    ...mapActions([
+      "GET_PAGE_DETAIL",
+      "SAVE_COMMENT",
+      "SAVE_REPLY_COMMENT",
+      "UPDATE_COMMENT",
+      "DELETE_COMMENT"]),
+    replyToggle,
+    updateToggle,
   },
   beforeRouteUpdate: (to, from, next) => {
     this.GET_PAGE_DETAIL({
@@ -640,7 +710,7 @@ export default {
       subCategory: this.$route.params.subCategoryName,
       boardId: this.$route.params.boardId,
     });
-  }
+  },
 };
 </script>
 

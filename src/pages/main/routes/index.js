@@ -34,6 +34,12 @@ let router = createRouter({
             props : { title: '글 쓰기 페이지'}
         },
         {
+            path: "/board/:category/:subCategory/:boardId/form",
+            name: "form",
+            component: BoardForm,
+            props : { title: '글 수정 페이지'}
+        },
+        {
             path: '/boards/:categoryName/:subCategoryName',
             name: 'boardList',
             component: BoardList,

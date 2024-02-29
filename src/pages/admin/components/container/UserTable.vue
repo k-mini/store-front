@@ -100,11 +100,12 @@ const options = {
   serverSide: true,
   processing: true,
   columnDefs: [{ orderable: false, targets: [0] }],
-  drawCallback: function () {
-    var api = this.api();
+
+  initComplete: function() {
+    let api = this.api();
+    $("#checkall").prop("checked", false);
 
     // 전체 선택 이벤트 등록
-    $("#checkall").prop("checked", false);
     $("#checkall").on("click", function () {
       var value = $(this).prop("checked");
       api.cells('.select-checkbox')
@@ -112,6 +113,11 @@ const options = {
           api.cell(rowIdx, colIdx).data(value);
       });
     });
+  },
+
+  drawCallback: function () {
+    let api = this.api();
+    $("#checkall").prop("checked", false);
 
     // 개별 버튼 유저 삭제 이벤트 등록
     api.column(-1)
@@ -127,7 +133,10 @@ const options = {
               console.log(err);
             });
         });
-      })
+      });
+
+    // footer 모양 깨짐 조정
+    $(api.column(0).footer()).removeClass('dt-type-numeric');
   },
   layout: {
     // top2Start: function () {

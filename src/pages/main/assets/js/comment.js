@@ -1,3 +1,4 @@
+/* eslint-disable */
 
 let index = {
 
@@ -124,9 +125,9 @@ function getCommentComp(data) {
                 </div>
 
                 <div class="flex items-center">
-                    <button onclick="updateComment(${data.id})" class="inline-flex items-center mr-3 text-sm text-gray-900 hover:underline dark:text-white font-semibold">
+                    <button id="comment-${data.id}-update" onclick="updateComment(${data.id})" class="inline-flex items-center mr-3 text-sm text-gray-900 hover:underline dark:text-white font-semibold">
                         수정</button>
-                    <button onclick="deleteComment(${data.id})" class="inline-flex items-center mr-3 text-sm text-gray-900 hover:underline dark:text-white font-semibold">
+                    <button id="comment-${data.id}-delete" onclick="deleteComment(${data.id})" class="inline-flex items-center mr-3 text-sm text-gray-900 hover:underline dark:text-white font-semibold">
                         삭제</button>
                 </div>
             </div>
@@ -134,8 +135,7 @@ function getCommentComp(data) {
             <p class="text-gray-500 py-4 dark:text-gray-400">${data.content}</p>
             
             <div class="flex items-center py-4">
-                <button id="reply-toggle-${data.id}" 
-                        onclick="replyToggle(${data.id})"
+                <button id="reply-toggle-${data.id}"
                         type="button"
                         class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium">
                     답글 달기

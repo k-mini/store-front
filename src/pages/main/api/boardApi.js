@@ -4,15 +4,11 @@ const config = {
     baseUrl: 'http://localhost:9090'
 };
 
-// 로그인 요청 (POST)
-function postLogin(email, password) {
-    return axios.post(`${config.baseUrl}/auth/signin`, { email: email, password: password});
+export {
+    fetchBoardLists,
+    fetchBoardDetail,
 }
 
-// 카테고리 요청 (GET)
-function fetchCategories() {
-    return axios.get(`${config.baseUrl}/api/categories`);
-}
 
 // 게시물 요청 (GET)
 function fetchBoardLists(categoryName, subCategoryName, searchType, searchKeyword, page) {
@@ -35,10 +31,3 @@ function fetchBoardDetail(categoryName, subCategoryName, boardId) {
         }
     });
 }
-
-export { 
-    postLogin,
-    fetchCategories,
-    fetchBoardLists,
-    fetchBoardDetail,
- };

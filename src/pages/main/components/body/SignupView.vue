@@ -13,50 +13,39 @@
               </router-link>
             </div>
             <form
-              action="/auth/signup"
-              th:object="${userSaveReqDto}"
-              enctype="multipart/form-data"
               method="POST"
+              v-on:submit.prevent="processJoin"
             >
               <div class="mb-4">
                 <input
-                  th:field="*{email}"
+                  v-model="email"
                   type="email"
                   placeholder="이메일을 입력해 주세요"
                   class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
                 />
-                <div class="py-2 field-error flex items-center justify-start">
-                  <p th:errors="*{email}"></p>
-                </div>
               </div>
 
               <div class="mb-4">
                 <input
-                  th:field="*{username}"
+                  v-model="username"
                   type="text"
                   placeholder="이름을 입력해 주세요"
                   class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
                 />
-                <div class="py-2 field-error flex items-center justify-start">
-                  <p th:errors="*{username}"></p>
-                </div>
               </div>
 
               <div class="mb-4">
                 <input
-                  th:field="*{password}"
+                  v-model="password"
                   type="password"
                   placeholder="영문자 숫자 포함 최소 8~20자"
                   class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
                 />
-                <div class="py-2 field-error flex items-center justify-start">
-                  <p th:errors="*{password}"></p>
-                </div>
               </div>
 
               <div class="mb-6">
                 <input
-                  th:field="*{passwordCheck}"
+                  v-model="passwordCheck"
                   type="password"
                   placeholder="비밀번호를 확인해 주세요"
                   class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
@@ -65,7 +54,7 @@
 
               <div class="mb-6">
                 <input
-                  th:field="*{file}"
+                  id="file"
                   type="file"
                   class="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke dark:border-dark-3 font-medium text-body-color dark:text-dark-6 outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke dark:file:border-dark-3 file:bg-[#F5F7FD] dark:file:bg-dark-2 file:py-3 file:px-5 file:text-body-color dark:file:text-dark-6 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]"
                 />
@@ -375,6 +364,8 @@
 </template>
 
 <script>
+import $ from 'jquery';
+import { mapActions } from 'vuex';
 export default {
   props: ['title'],
   data() {
@@ -383,11 +374,32 @@ export default {
       username: '',
       password: '',
       passwordCheck: '',
-      file: null,
+    }
+  },
+  methods: {
+    ...mapActions(['PROCESS_JOIN']),
+    processJoin() {
+      // console.log('processJoin 호출');
+      // console.log(this.email, this.username, this.password, 
+      //   this.passwordCheck, $('#file')[0].files[0] );
+      this.PROCESS_JOIN({
+        email: this.email, 
+        username: this.username, 
+        password: this.password,
+        passwordCheck: this.passwordCheck,
+        file: $('#file')[0].files[0],
+      })
+      .then(() => {
+        console.log('회원가입 성공');
+        this.$router.push('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      })
     }
   },
   created() {
-    this.$store.commit('SET_TITLE', { title : this.title });
+    this.$store.commit('SET_TITLE', this.title);
   }
 };
 </script>

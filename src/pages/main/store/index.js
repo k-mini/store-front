@@ -5,12 +5,12 @@ import mutations from './mutations';
 
 export const store = createStore({
     state: {
-        authenticated: false,
         categories: [],
         categoryMap: {},
         title: "",
         pageResult: {},
         pageDetail: {},
+        authentication: null,
     },
     getters,
     actions,

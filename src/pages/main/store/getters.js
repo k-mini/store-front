@@ -6,8 +6,8 @@ export default {
     getCategoryMap(state) {
         return state.categoryMap;
     },
-    getAuthenticated(state) {
-        return state.authenticated;
+    getAuthentication(state) {
+        return state.authentication;
     },
     getPageResult(state) {
         return state.pageResult;
@@ -15,7 +15,7 @@ export default {
     getTitle(state) {
         return state.title;
     },
-    getPageDetail(state){
+    getPageDetail(state) {
         return state.pageDetail;
     },
 }

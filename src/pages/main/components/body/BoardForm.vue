@@ -308,7 +308,7 @@
 export default {
   props : ['title'],
   created() {
-    this.$store.commit('SET_TITLE', { title : this.title });
+    this.$store.commit('SET_TITLE', this.title);
   },
 };
 </script>
