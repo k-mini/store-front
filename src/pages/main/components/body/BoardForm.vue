@@ -13,12 +13,7 @@
               </a>
             </div>
 
-            <form
-              th:action
-              th:object="${itemBoardSaveReqDto}"
-              enctype="multipart/form-data"
-              method="post"
-            >
+            <form method="post" v-on:submit.prevent="saveBoard">
               <div class="mb-6">
                 <div class="flex items-center md:justify-start">
                   <label
@@ -28,8 +23,7 @@
                   >
                 </div>
                 <input
-                  th:field="*{title}"
-                  name="title"
+                  v-model="boardTitle"
                   type="text"
                   placeholder="제목을 입력해 주세요"
                   class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
@@ -44,11 +38,15 @@
                     >사진</label
                   >
                 </div>
-                <input
-                  th:field="*{file}"
-                  type="file"
-                  class="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke dark:border-dark-3 font-medium text-body-color dark:text-dark-6 outline-none transition file:mr-5 file:border-collapse file:cursor-pointer file:border-0 file:border-r file:border-solid file:border-stroke dark:file:border-dark-3 file:bg-[#F5F7FD] dark:file:bg-dark-2 file:py-3 file:px-5 file:text-body-color dark:file:text-dark-6 file:hover:bg-primary file:hover:bg-opacity-10 focus:border-primary active:border-primary disabled:cursor-default disabled:bg-[#F5F7FD]"
-                />
+                <div class="filebox" style="margin : 20px 0px;">
+                  <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
+                  <label for="file">파일찾기</label> 
+                  <input type="file" id="file">
+                </div>
+
+                <div style="margin : 20px 10px;">
+                  <img id="fileImage"/>
+                </div>
               </div>
 
               <div class="mb-6">
@@ -60,9 +58,7 @@
                   >
                 </div>
                 <textarea
-                  th:field="*{content}"
-                  name="content"
-                  id="message"
+                  v-model="content"
                   rows="15"
                   class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
                   placeholder="내용을 입력해 주세요"
@@ -305,13 +301,125 @@
 </template>
 
 <script>
+import $ from "jquery";
+import { mapActions, mapGetters } from "vuex";
+import { fetchImage } from "../../api/boardApi";
+
 export default {
-  props : ['title'],
-  created() {
-    this.$store.commit('SET_TITLE', this.title);
+  props: ["title"],
+  data() {
+    return {
+      boardTitle: "",
+      content: "",
+    };
   },
+  computed: {
+    ...mapGetters(["getPageDetail"]),
+    category() {
+      return this.$route.params.category;
+    },
+    subCategory() {
+      return this.$route.params.subCategory;
+    },
+    boardId() {
+      return this.$route.params.boardId;
+    },
+  },
+  methods: {
+    ...mapActions(["CREATE_BOARD", "UPDATE_BOARD"]),
+    saveBoard() {
+      let file = $("#file")[0].files[0];
+      let category = this.category;
+      let subCategory = this.subCategory;
+      let boardId = this.boardId;
+      let params = {
+        title: this.boardTitle,
+        content: this.content,
+        file: file,
+      };
+      console.log("saveBoard 시작");
+      // 생성
+      if (boardId == undefined) {
+        this.CREATE_BOARD({ category, subCategory, params })
+          .then(() => {
+            console.log("게시물 생성 성공");
+            this.$router.push(`/boards/${category}/${subCategory}`);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        this.UPDATE_BOARD({ category, subCategory, boardId, params })
+          .then(() => {
+            console.log("게시물 수정 성공");
+            this.$router.push(`/boards/${category}/${subCategory}`);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    },
+  },
+  created() {
+    this.$store.commit("SET_TITLE", this.title);
+    this.boardTitle = this.getPageDetail.title;
+    this.content = this.getPageDetail.content;
+
+    let thumbnailUrl = this.getPageDetail.boardThumbnail;
+    let url = `http://localhost:9090/images/${thumbnailUrl}`;
+    fetchImage(thumbnailUrl)
+      .then((res) => {
+        let ext = url.split(".").pop();
+        let fileName = url.split("/").pop();
+        let file = new File([res], fileName, { type: `image/${ext}` });
+
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+
+        $("#file")[0].files = dataTransfer.files;
+        $('#fileImage').attr('src', url);
+      });
+  },
+  mounted() {
+    // file input 변경 될 때 마다 변경이벤트
+    $("#file").on('change',function(){
+      var fileName = $("#file").val();
+      $(".upload-name").val(fileName);
+    });
+  }
 };
 </script>
 
 <style>
+.filebox .upload-name {
+    display: inline-block;
+    height: 40px;
+    padding: 0 10px;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+    width: 78%;
+    color: #999999;
+}
+
+.filebox label {
+    display: inline-block;
+    padding: 10px 20px;
+    color: #fff;
+    vertical-align: middle;
+    background-color: #999999;
+    cursor: pointer;
+    height: 40px;
+    margin-left: 10px;
+}
+
+.filebox input[type="file"] {
+    position: absolute;
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+}
 </style>
+
+

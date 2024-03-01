@@ -300,8 +300,6 @@ export default {
   methods: {
     ...mapActions(['PROCESS_LOGIN']),
     processLogin() {
-      console.log('login post 호출');
-      console.log(this.email, this.password);
       this.PROCESS_LOGIN({ email: this.email, password: this.password})
         .then(()=>{
           console.log('로그인 성공');

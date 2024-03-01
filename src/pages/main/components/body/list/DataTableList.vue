@@ -1,6 +1,7 @@
 <template>
   <div class="relative py-3 overflow-x-auto">
     <data-table
+      id="datatables"
       :columns="columns"
       :options="options"
       :ajax="ajax"
@@ -11,10 +12,10 @@
 </template>
 
 <script>
+import $ from 'jquery';
 import { mapGetters } from "vuex";
 import DataTable from "datatables.net-vue3";
 import DataTablesCore from 'datatables.net-dt';
-
 const columns = [
   { data: 'id', title: "게시물 번호", footer: "게시물 번호",
     render: function(data, type){
@@ -36,10 +37,15 @@ const options = {
   select: true,
   serverSide: true,
   processing: true,
+  stateSave: true,
+  preDrawCallback: function(settings) {
+    console.log(settings);
+    settings.ajax.url = '/api' + window.document.location.pathname;
+  }
 };
 
 const ajax = {
-  url: "http://localhost:9090/api/boards/community/free",
+  url: `http://localhost:9090/api/boards/community/free`,
   type: "GET",
   // contentType: "application/json",
   data: function(data) {
@@ -47,9 +53,9 @@ const ajax = {
     var newData = {};
     var page = data.start / data.length ;
 
-    newData.page = page;
+    data.page = page;
     newData.draw = data.draw;
-    console.log('보낼 데이터', newData);
+    console.log('보낼 데이터', data);
     return newData;
   },
   dataSrc: {
@@ -58,24 +64,34 @@ const ajax = {
     recordsTotal: "page.totalElements",
     recordsFiltered: "page.totalElements",
   },
-  // dataSrc: function(res) {
-  //   console.log('받은 데이터 ',res);
-  //   return res.page.content;
-  // }
 }
-
 DataTable.use(DataTablesCore);
 
 export default {
   components: {
     DataTable,
   },
+  // props: [''],
   data() {
     return {
       columns: columns,
       options: options,
       ajax: ajax,
     }
+  },
+  watch: {
+    catrgoey() {
+      console.log('category 변경됨');
+      $("#datatables").DataTable()
+        .ajax.url(`/api/boards/${this.category}/${this.subCategory}`)
+        .draw();
+    },
+    subCategory() {
+      console.log('subCategory 변경 됨');
+      $("#datatables").DataTable()
+        .ajax.url(`/api/boards/${this.category}/${this.subCategory}`)
+        .draw();
+    },
   },
   computed: {
     ...mapGetters(["getPageResult"]),

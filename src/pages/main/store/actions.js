@@ -1,6 +1,8 @@
 import {
     fetchBoardDetail,
     fetchBoardLists,
+    createBoard,
+    updateBoard,
 } from '../api/boardApi';
 
 import {
@@ -38,7 +40,6 @@ export default {
 
     async PROCESS_JOIN(context, { email, username, password, passwordCheck, file }) {
         const response = await processJoin(email, username, password, passwordCheck, file)
-        console.log(response);
         return response;
     },
 
@@ -69,6 +70,18 @@ export default {
 
         context.commit('SET_TITLE', categoryMap.get(subCategory.toUpperCase()) + ' 게시판')
         context.commit('SET_PAGE_DETAIL', response.data.data);
+        return response;
+    },
+
+    async CREATE_BOARD(context, { category, subCategory, params}) {
+        const response = await createBoard(category, subCategory, params);
+        console.log(response);
+        return response;
+    },
+
+    async UPDATE_BOARD(context, { category, subCategory, boardId, params}) {
+        const response = await updateBoard(category, subCategory, boardId, params);
+        console.log(response);
         return response;
     },
 
