@@ -6,8 +6,13 @@ const config = {
 
 export {
     deleteUser,
+    fetchedUserJoinStatistics,
 };
 
 function deleteUser(userId) {
     return axios.delete(`${config.baseUrl}/api/user/${userId}`);
+}
+
+function fetchedUserJoinStatistics() {
+    return ;
 }

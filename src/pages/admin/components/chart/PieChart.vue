@@ -10,7 +10,8 @@ export default {
     var Chart = this.$_Chart;
 
     // Set new default font family and font color to mimic Bootstrap's default styling
-    Chart.defaults.font.family = "Nunito",'-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    (Chart.defaults.font.family = "Nunito"),
+      '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
     Chart.defaults.color = "#858796";
 
     // Pie Chart Example
@@ -32,20 +33,24 @@ export default {
       },
       options: {
         maintainAspectRatio: false,
-        tooltips: {
-          backgroundColor: "rgb(255,255,255)",
-          bodyFontColor: "#858796",
-          borderColor: "#dddfeb",
-          borderWidth: 1,
-          xPadding: 15,
-          yPadding: 15,
-          displayColors: false,
-          caretPadding: 10,
+        plugins: {
+          tooltip: {
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#858796",
+            borderColor: "#dddfeb",
+            borderWidth: 1,
+            padding: {
+              x: 15,
+              y: 15,
+            },
+            displayColors: false,
+            caretPadding: 10,
+          },
+          legend: {
+            display: true,
+          },
+          cutout: 80,
         },
-        legend: {
-          display: false,
-        },
-        cutoutPercentage: 80,
       },
     });
     console.log(myPieChart);

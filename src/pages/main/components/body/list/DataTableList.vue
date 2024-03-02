@@ -38,9 +38,9 @@ const options = {
   serverSide: true,
   processing: true,
   stateSave: true,
-  preDrawCallback: function(settings) {
-    console.log(settings);
-    settings.ajax.url = '/api' + window.document.location.pathname;
+  preDrawCallback: function() {
+    // console.log(settings);
+    // settings.ajax.url = '/api' + window.document.location.pathname;
   }
 };
 

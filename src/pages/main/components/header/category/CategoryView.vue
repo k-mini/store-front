@@ -48,7 +48,7 @@
             class="submenu relative top-full left-0 hidden w-[250px] rounded-sm bg-white p-4 transition-[top] duration-300 group-hover:opacity-100 lg:invisible lg:absolute lg:top-[110%] lg:block lg:opacity-0 lg:shadow-lg lg:group-hover:visible lg:group-hover:top-full"
           >
             <router-link
-              :to="`/auth/my-page`"
+              :to="`/auth/account`"
               class="block rounded py-[10px] px-4 text-sm text-body-color hover:text-primary"
             >
               회원정보 변경

@@ -4,9 +4,6 @@
       <gallery-list v-if="category === 'trade'"></gallery-list>
       <data-table-list v-else></data-table-list>
 
-      <!-- <common-list v-if="category === 'community' && subCategory !== 'free'"></common-list> -->
-      <!-- <data-table-list v-if="category === 'community' && subCategory == 'free'"></data-table-list> -->
-
       <page-navi v-if="category == 'trade'"></page-navi>
     </div>
   </section>

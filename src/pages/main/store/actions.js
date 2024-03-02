@@ -7,7 +7,8 @@ import {
 
 import {
     processJoin,
-    processLogin
+    processLogin,
+    updateUser,
 } from '../api/userApi';
 
 import {
@@ -41,6 +42,11 @@ export default {
     async PROCESS_JOIN(context, { email, username, password, passwordCheck, file }) {
         const response = await processJoin(email, username, password, passwordCheck, file)
         return response;
+    },
+    
+    async UPDATE_USER(context, payload) {
+        const response = await updateUser(payload.userId, payload);
+        return response
     },
 
     async FETCH_CATEGORIES(context) {

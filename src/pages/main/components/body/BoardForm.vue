@@ -44,7 +44,7 @@
                   <input type="file" id="file">
                 </div>
 
-                <div style="margin : 20px 10px;">
+                <div style="margin : 20px 15px;">
                   <img id="fileImage"/>
                 </div>
               </div>
@@ -366,23 +366,31 @@ export default {
     this.content = this.getPageDetail.content;
 
     let thumbnailUrl = this.getPageDetail.boardThumbnail;
-    let url = `http://localhost:9090/images/${thumbnailUrl}`;
-    fetchImage(thumbnailUrl)
-      .then((res) => {
-        let ext = url.split(".").pop();
-        let fileName = url.split("/").pop();
-        let file = new File([res], fileName, { type: `image/${ext}` });
 
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(file);
+    if (thumbnailUrl != undefined) {
+      let url = `http://localhost:9090/images/${thumbnailUrl}`;
+      fetchImage(thumbnailUrl)
+        .then((res) => {
+          let ext = url.split(".").pop();
+          let fileName = url.split("/").pop();
+          let file = new File([res], fileName, { type: `image/${ext}` });
 
-        $("#file")[0].files = dataTransfer.files;
-        $('#fileImage').attr('src', url);
-      });
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(file);
+
+          // fileList 등록
+          $("#file")[0].files = dataTransfer.files;
+
+          // filePath 등록
+          let filePath = $('#file').val();
+          $('.upload-name').val(filePath);
+          $('#fileImage').attr('src', url);
+        });
+    }
   },
   mounted() {
-    // file input 변경 될 때 마다 변경이벤트
-    $("#file").on('change',function(){
+    // file input 변경 될 때 마다 파일 이름 이벤트
+    $("#file").on('change', function(){
       var fileName = $("#file").val();
       $(".upload-name").val(fileName);
     });
@@ -394,7 +402,7 @@ export default {
 .filebox .upload-name {
     display: inline-block;
     height: 40px;
-    padding: 0 10px;
+    padding: 0 0px;
     vertical-align: middle;
     border: 1px solid #dddddd;
     width: 78%;

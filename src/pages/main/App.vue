@@ -16,8 +16,6 @@ export default {
   created() {
     // console.log(this.$router.getRoutes());
   },
-  methods: {
-  },
 };
 </script>
 

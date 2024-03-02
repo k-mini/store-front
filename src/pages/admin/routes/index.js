@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import BodyIndex from '../components/container/BodyIndex';
-import ChartView from '../components/container/ChartView';
-import TableView from '../components/container/TableView';
-import UserTable from '../components/container/UserTable';
-import BoardTable from '../components/container/BoardTable';
-import CommentTable from '../components/container/CommentTable';
+import BodyIndex from '../components/container/BodyIndex.vue';
+import ChartView from '../components/container/ChartView.vue';
+import TableView from '../components/container/TableView.vue';
+import UserTable from '../components/container/UserTable.vue';
+import BoardTable from '../components/container/BoardTable.vue';
+import CommentTable from '../components/container/CommentTable.vue';
+import StatisticsView from '../components/container/statistics/StatisticsView.vue';
 
 let router = createRouter({
     history: createWebHistory(),
@@ -38,6 +39,16 @@ let router = createRouter({
             path: "/admin/comments",
             name: "comments",
             component: CommentTable,
+        },
+        {
+            path: "/admin/statistics",
+            name: "statisticsIndex",
+            redirect: "/admin",
+        },
+        {
+            path: "/admin/statistics/:type",
+            name: "statistics",
+            component: StatisticsView,
         },
     ]
 })

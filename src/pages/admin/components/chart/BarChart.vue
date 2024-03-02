@@ -5,14 +5,14 @@
 </template>
 
 <script>
-import { number_format } from '../../assets/js/common.js';
+import { number_format } from "../../assets/js/common.js";
 export default {
   mounted() {
     var Chart = this.$_Chart;
 
     // var ctx = document.getElementById("myBarChart");
-    var ctx = this.$refs.myBarChart
-    
+    var ctx = this.$refs.myBarChart;
+
     var myBarChart = new Chart(ctx, {
       type: "bar",
       data: {
@@ -38,66 +38,68 @@ export default {
           },
         },
         scales: {
-          xAxes: [
-            {
-              time: {
-                unit: "month",
-              },
-              gridLines: {
-                display: false,
-                drawBorder: false,
-              },
-              ticks: {
-                maxTicksLimit: 6,
-              },
-              maxBarThickness: 25,
+          x: {
+            time: {
+              unit: "month",
             },
-          ],
-          yAxes: [
-            {
-              ticks: {
-                min: 0,
-                max: 15000,
-                maxTicksLimit: 5,
-                padding: 10,
-                // Include a dollar sign in the ticks
-                callback: function (value, 
-                // index, 
+            gridLines: {
+              display: false,
+            },
+            ticks: {
+              maxTicksLimit: 6,
+            },
+            border: {
+              display: false,
+            },
+            maxBarThickness: 25,
+          },
+          y: {
+            ticks: {
+              min: 0,
+              max: 15000,
+              maxTicksLimit: 5,
+              padding: 10,
+              // Include a dollar sign in the ticks
+              callback: function (
+                value
+                // index,
                 // values
-                ) {
-                  return "$" + number_format(value);
-                },
-              },
-              gridLines: {
-                color: "rgb(234, 236, 244)",
-                zeroLineColor: "rgb(234, 236, 244)",
-                drawBorder: false,
-                borderDash: [2],
-                zeroLineBorderDash: [2],
+              ) {
+                return "$" + number_format(value);
               },
             },
-          ],
+            grid: {
+              color: "rgb(234, 236, 244)",
+              borderDash: [2],
+            },
+            border: {
+              display: false,
+            },
+          },
         },
-        legend: {
-          display: false,
-        },
-        tooltips: {
-          titleMarginBottom: 10,
-          titleFontColor: "#6e707e",
-          titleFontSize: 14,
-          backgroundColor: "rgb(255,255,255)",
-          bodyFontColor: "#858796",
-          borderColor: "#dddfeb",
-          borderWidth: 1,
-          xPadding: 15,
-          yPadding: 15,
-          displayColors: false,
-          caretPadding: 10,
-          callbacks: {
-            label: function (tooltipItem, chart) {
-              var datasetLabel =
-                chart.datasets[tooltipItem.datasetIndex].label || "";
-              return datasetLabel + ": $" + number_format(tooltipItem.yLabel);
+        plugins: {
+          legend: {
+            display: true,
+          },
+          tooltip: {
+            titleMarginBottom: 10,
+            titleColor: "#6e707e",
+            backgroundColor: "rgb(255,255,255)",
+            bodyColor: "#858796",
+            borderColor: "#dddfeb",
+            borderWidth: 1,
+            padding: {
+              x: 15,
+              y: 15,
+            },
+            displayColors: false,
+            caretPadding: 10,
+            callbacks: {
+              label: function(tooltipItem) {
+                let chart = tooltipItem.chart;
+                var datasetLabel = chart.data.datasets[tooltipItem.datasetIndex].label || "";
+                return datasetLabel + ": $" + number_format(tooltipItem.formattedValue);
+              },
             },
           },
         },

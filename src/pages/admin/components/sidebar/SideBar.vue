@@ -110,9 +110,9 @@
       >
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">통계</h6>
-          <a class="collapse-item" href="buttons.html">게시물 통계</a>
-          <a class="collapse-item" href="buttons.html">유저 통계</a>
-          <a class="collapse-item" href="buttons.html">댓글 통계</a>
+          <router-link class="collapse-item" :to="`/admin/statistics/boards`">게시물 통계</router-link>
+          <router-link class="collapse-item" :to="`/admin/statistics/users`">유저 통계</router-link>
+          <router-link class="collapse-item" :to="`/admin/statistics/comments`">댓글 통계</router-link>
         </div>
       </div>
     </li>

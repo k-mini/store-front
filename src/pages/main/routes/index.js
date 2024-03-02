@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import BodyIndexView from '../components/body/BodyIndexView.vue';
 import SigninView from '../components/body/SigninView.vue';
 import SignupView from '../components/body/SignupView.vue';
+import MyAccountView from '../components/body/MyAccountView.vue';
 import BoardForm from '../components/body/BoardForm.vue';
 import BoardList from '../components/body/BoardList.vue';
 import BoardDetail from '../components/body/BoardDetail.vue';
@@ -19,19 +20,25 @@ let router = createRouter({
             path: "/auth/signin",
             name: "signin",
             component: SigninView,
-            props : { title: '로그인 페이지'}
+            props : { title: '로그인'}
         },
         {
             path: "/auth/signup",
             name: "signup",
             component: SignupView,
-            props : { title: '회원가입 페이지'}
+            props : { title: '회원가입'}
+        },
+        {
+            path: "/auth/account",
+            name: "account",
+            component: MyAccountView,
+            props : { title: '회원정보 수정'}
         },
         {
             path: "/board/:category/:subCategory/form",
             name: "form",
             component: BoardForm,
-            props : { title: '글 쓰기 페이지'}
+            props : { title: '글 쓰기'}
         },
         {
             path: "/board/:category/:subCategory/:boardId/form",
