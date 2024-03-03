@@ -169,7 +169,7 @@ export default {
       // },
       // 게시물 카테고리별 작성 수 차트 종료
 
-
+        cnt: 1,
     };
   },
   watch: {
@@ -180,7 +180,15 @@ export default {
       deep: true,
     },
   },
+  created() {
+    console.log('boardStatistics 생성됨');
+  },
+  destoryed() {
+    console.log('파괴딤');
+  },
   mounted() {
+    this.cnt += 1;
+    console.log(this.cnt);
     // setTimeout(() => {
     // this.data.datasets[0].data =
     // [20000, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 41000];

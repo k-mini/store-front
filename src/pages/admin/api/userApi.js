@@ -7,6 +7,8 @@ const config = {
 export {
     deleteUser,
     fetchedUserJoinStatistics,
+    fetchedUserRatioStatistics,
+    fetchedUserAgeStatistics,
 };
 
 function deleteUser(userId) {
@@ -14,5 +16,13 @@ function deleteUser(userId) {
 }
 
 function fetchedUserJoinStatistics() {
-    return ;
+    return axios.get('/api/admin/statistics/users/join');
+}
+
+function fetchedUserRatioStatistics() {
+    return axios.get('/api/admin/statistics/users/ratio');
+}
+
+function fetchedUserAgeStatistics() {
+    return axios.get('/api/admin/statistics/users/age');
 }

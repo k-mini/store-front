@@ -1,10 +1,45 @@
 
 export {
     userJoinData,
+    initUserJoinData,
     userJoinOptions,
 };
 
+function initUserJoinData() {
+    return {
+        labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+        datasets: [
+            {
+                label: "2022년",
+                lineTension: 0.3, // 선 휘는 정도
+                pointRadius: 3, // 값에 해당하는 원의 반지름
+                pointHoverRadius: 15, // 값에 포인터 접근시 원의 반지름
+                pointHitRadius: 15, // 포인터 이벤트 발동 범위
+                pointBorderWidth: 2, // 값 해당하는 원의 경계면 두께
+                data: [
+                    0, 10, 5, 15, 10, 20, 15, 25, 20, 30,
+                    25, 41,
+                ],
+            },
+            {
+                label: "2023년",
+                lineTension: 0.3,
+                pointRadius: 3,
+                pointHoverRadius: 15,
+                pointHitRadius: 15,
+                pointBorderWidth: 2,
+                data: [
+                    0, 11, 4, 17, 8, 3, 15, 27, 19, 25,
+                    24, 43,
+                ],
+            },
+        ],
+    };
+}
+
 // 유저 월 별 가입자수 차트
+// 이걸로 export 하면 컴포넌트 생성될 때 기존 값으로 export 되어
+// 데이터가 누적됨
 let userJoinData = {
     labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
     datasets: [
@@ -16,8 +51,8 @@ let userJoinData = {
             pointHitRadius: 15, // 포인터 이벤트 발동 범위
             pointBorderWidth: 2, // 값 해당하는 원의 경계면 두께
             data: [
-                0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000,
-                25000, 41000,
+                0, 100, 50, 150, 100, 200, 150, 250, 200, 300,
+                250, 410,
             ],
         },
         {
@@ -28,8 +63,8 @@ let userJoinData = {
             pointHitRadius: 15,
             pointBorderWidth: 2,
             data: [
-                0, 11000, 4000, 17000, 8000, 3000, 15000, 27000, 19000, 25000,
-                24000, 43000,
+                0, 110, 40, 170, 80, 30, 150, 270, 190, 250,
+                240, 430,
             ],
         },
     ],

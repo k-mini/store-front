@@ -1,21 +1,24 @@
 
 export {
-    userAgeData,
+    initUserAgeData,
     userAgeOptions,
 }
 
 // 유저 연령대 차트
 
-let userAgeData = {
-    labels: ["10대", "20대", "30대", "40대", "50대", "60대"],
-    datasets: [
-        {
-            label: "연령대",
-            data: [5600, 17000, 24536, 12000, 9821, 4984],
-            // backgroundColor: "#38ABF2",
-        },
-    ],
-};
+function initUserAgeData() {
+    return {
+        labels: ["10대", "20대", "30대", "40대", "50대", "60대"],
+        datasets: [
+            {
+                label: "연령대",
+                data: [56, 170, 245, 120, 98, 49],
+                
+                // backgroundColor: "#38ABF2",
+            },
+        ]
+    }
+}
 
 let userAgeOptions = {
     maintainAspectRatio: false,
