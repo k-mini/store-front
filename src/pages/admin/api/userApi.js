@@ -7,7 +7,7 @@ const config = {
 export {
     deleteUser,
     fetchedUserJoinStatistics,
-    fetchedUserRatioStatistics,
+    fetchedUserGenderRatioStatistics,
     fetchedUserAgeStatistics,
 };
 
@@ -15,14 +15,17 @@ function deleteUser(userId) {
     return axios.delete(`${config.baseUrl}/api/user/${userId}`);
 }
 
-function fetchedUserJoinStatistics() {
-    return axios.get('/api/admin/statistics/users/join');
+function fetchedUserJoinStatistics(year) {
+    let params = { year: year }
+    return axios.get('/api/admin/statistics/users/join', { params });
 }
 
-function fetchedUserRatioStatistics() {
-    return axios.get('/api/admin/statistics/users/ratio');
+function fetchedUserGenderRatioStatistics(year) {
+    let params = { year: year}
+    return axios.get('/api/admin/statistics/users/gender', { params });
 }
 
-function fetchedUserAgeStatistics() {
-    return axios.get('/api/admin/statistics/users/age');
+function fetchedUserAgeStatistics(year) {
+    let params = { year: year }
+    return axios.get('/api/admin/statistics/users/age', { params });
 }

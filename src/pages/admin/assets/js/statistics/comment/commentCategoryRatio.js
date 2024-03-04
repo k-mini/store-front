@@ -1,32 +1,31 @@
 
 export {
-  userRatioType,
-  initUserRatioData,
-  userRatioOptions,
+    commentCategoryRatioType,
+    initCommentCategoryRatioData,
+    commentCategoryRatioOptions,
 }
 
-// 유저 남녀 성비 차트
+// 댓글 작성 카테고리 별 비율
+let commentCategoryRatioType = "doughnut";
 
-let userRatioType = "doughnut";
-
-function initUserRatioData() {
+function initCommentCategoryRatioData() {
   return {
-    labels: ["남", "여"],
+    labels: ["전자 게시판", "의류 게시판","자유 게시판","공지사항 게시판"],
     datasets: [
       {
-        data: [55, 45],
+        data: [30,10,25,35],
       },
     ]
   }
 }
 
-let userRatioOptions = {
+let commentCategoryRatioOptions = {
   maintainAspectRatio: false,
   cutout: 90, // 도넛 모양 시 중앙 공간 자를 비율 
   plugins: {
     title: {
       display: false,
-      text: '남/여',
+      text: '카테고리 댓글 비율',
     },
     tooltip: {
       backgroundColor: "rgb(255,255,255)",
@@ -43,7 +42,7 @@ let userRatioOptions = {
       callbacks: {
         title: function (TooltipItems) {
           var TooltipItem = TooltipItems[0];
-          return `${TooltipItem.label + '자'}`;
+          return `${TooltipItem.label}`;
         },
         label: function (TooltipItem) {
           return `${TooltipItem.raw}%`;

@@ -1,16 +1,15 @@
 
 export {
-    categoryData2,
+    categoryData,
     categoryOptions,
 }
 
-
-let categoryData2 = {
-    labels: ["10대", "20대", "30대", "40대", "50대", "60대"],
+let categoryData = {
+    labels: ["10대", "20대", "30대", "40대", "50대", "60대","70대"],
     datasets: [
         {
             label: "월별 카테고리별 작성 수",
-            data: [5600, 17000, 24536, 12000, 9821, 4984],
+            data: [56, 170, 245, 120, 98, 49, 10],
             // backgroundColor: "#38ABF2",
         },
     ],
@@ -32,7 +31,7 @@ let categoryOptions = {
             //     unit: "month",
             // },
             ticks: {
-                maxTicksLimit: 6,
+                maxTicksLimit: 7,
             },
             grid: {
                 display: false,
@@ -63,7 +62,7 @@ let categoryOptions = {
     },
     plugins: {
         legend: {
-            display: true,
+            display: false,
         },
         tooltip: {
             titleMarginBottom: 10,

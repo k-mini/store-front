@@ -9,6 +9,7 @@
       <div class="card shadow mb-4">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">
+            <!-- {{ this.userJoinYear }}년도  -->
             유저 월별 가입자수 추이
           </h6>
         </div>
@@ -28,7 +29,7 @@
       <!-- Bar Chart -->
       <div class="card shadow mb-4">
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">유저 연령대</h6>
+          <h6 class="m-0 font-weight-bold text-primary">{{ this.userAgeYear }}년도 유저 연령대</h6>
         </div>
         <div class="card-body">
           <div class="chart-bar">
@@ -49,16 +50,16 @@
       <div class="card shadow mb-4">
         <!-- Card Header - Dropdown -->
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">유저 남/녀 비율</h6>
+          <h6 class="m-0 font-weight-bold text-primary">{{ this.userGenderRatioYear }}년도 유저 남/녀 비율</h6>
         </div>
         <!-- Card Body -->
         <div class="card-body">
           <div class="chart-pie pt-4">
             <Pie
-              v-if="ratioLoaded"
-              :type="userRatioType"
-              :data="userRatioData"
-              :options="userRatioOptions"
+              v-if="genderLoaded"
+              :type="userGenderRatioType"
+              :data="userGenderRatioData"
+              :options="userGenderRatioOptions"
             ></Pie>
           </div>
           <hr />
@@ -76,10 +77,10 @@ import {
   userJoinOptions,
 } from "../../../assets/js/statistics/user/userJoin";
 import {
-  initUserRatioData,
-  userRatioType,
-  userRatioOptions,
-} from "../../../assets/js/statistics/user/userRatio";
+  initUserGenderRatioData,
+  userGenderRatioType,
+  userGenderRatioOptions,
+} from "../../../assets/js/statistics/user/userGenderRatio";
 import {
   initUserAgeData,
   userAgeOptions,
@@ -95,64 +96,38 @@ export default {
   data() {
     return {
       // 유저 월 별 가입자수 차트
-      //   userJoinData: {
-      //     labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-      //     datasets: [
-      //     {
-      //         label: "2024년",
-      //         lineTension: 0.3, // 선 휘는 정도
-      //         pointRadius: 3, // 값에 해당하는 원의 반지름
-      //         pointHoverRadius: 15, // 값에 포인터 접근시 원의 반지름
-      //         pointHitRadius: 15, // 포인터 이벤트 발동 범위
-      //         pointBorderWidth: 2, // 값 해당하는 원의 경계면 두께
-      //         data: [
-      //             0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000,
-      //             25000, 41000,
-      //         ],
-      //     },
-      //     {
-      //         label: "2023년",
-      //         lineTension: 0.3,
-      //         pointRadius: 3,
-      //         pointHoverRadius: 15,
-      //         pointHitRadius: 15,
-      //         pointBorderWidth: 2,
-      //         data: [
-      //             0, 11000, 4000, 17000, 8000, 3000, 15000, 27000, 19000, 25000,
-      //             24000, 43000,
-      //         ],
-      //     },
-      // ],
-      //   },
       userJoinData: initUserJoinData(),
       userJoinOptions: userJoinOptions,
+      userJoinYear: 2024,
+      joinLoaded: false,
       // 유저 월 별 가입자수 차트 종료
 
       // 유저 남녀 비율 차트
-      userRatioType: userRatioType,
-      userRatioData: initUserRatioData(),
-      userRatioOptions: userRatioOptions,
+      userGenderRatioType: userGenderRatioType,
+      userGenderRatioData: initUserGenderRatioData(),
+      userGenderRatioOptions: userGenderRatioOptions,
+      userGenderRatioYear: 2024,
+      genderLoaded: false,
       // 유저 남녀 비율 차트 종료
 
       // 유저 연령대 차트
       userAgeData: initUserAgeData(),
       userAgeOptions: userAgeOptions,
+      userAgeYear: 2024,
+      ageLoaded: false,
       // 유저 연령대 차트 종료
 
-      joinLoaded: false,
-      ratioLoaded: false,
-      ageLoaded: false,
     };
   },
   methods: {
     ...mapActions([
       "FETCHED_USER_JOIN_STATISTICS",
-      "FETCHED_USER_RATIO_STATISTICS",
+      "FETCHED_USER_GENDER_RATIO_STATISTICS",
       "FETCHED_USER_AGE_STATISTICS",
     ]),
   },
   mounted() {
-    this.FETCHED_USER_JOIN_STATISTICS()
+    this.FETCHED_USER_JOIN_STATISTICS({ year: this.userJoinYear })
       .then((res) => {
         let chartData = res.data.data;
         let newDataSet = chartData.datasets[0];
@@ -163,18 +138,18 @@ export default {
         console.log(err);
       });
 
-    this.FETCHED_USER_RATIO_STATISTICS()
+    this.FETCHED_USER_GENDER_RATIO_STATISTICS({ year: this.userGenderRatioYear })
       .then((res) => {
         let chartData = res.data.data;
         let newDataSet = chartData.datasets[0];
-        this.userRatioData.datasets[0] = newDataSet;
-        this.ratioLoaded = true;
+        this.userGenderRatioData.datasets[0] = newDataSet;
+        this.genderLoaded = true;
       })
       .catch((err) => {
         console.log(err);
       });
 
-    this.FETCHED_USER_AGE_STATISTICS()
+    this.FETCHED_USER_AGE_STATISTICS({ year: this.userAgeYear })
       .then((res) => {
         let chartData = res.data.data;
         let newDataSet = chartData.datasets[0];

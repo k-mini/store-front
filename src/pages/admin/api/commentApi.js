@@ -2,7 +2,10 @@ import axios from 'axios';
 
 export {
     deleteComment,
-    deleteComments
+    deleteComments,
+    fetchedCommentWriteStatistics,
+    fetchedCommentCategoryStatistics,
+    fetchedCommentGenderStatistics,
 }
 
 const config = {
@@ -14,9 +17,21 @@ function deleteComment(commentId) {
 }
 
 function deleteComments(commentIds) {
-    return axios.delete(`${config.baseUrl}/api/admin/comments`,{
-        params: {
-            commentIds: commentIds.join(',')
-        }
-    });
+    let params = { commentIds: commentIds.join(',')};
+    return axios.delete(`${config.baseUrl}/api/admin/comments`,{ params });
+}
+
+function fetchedCommentWriteStatistics(year) {
+    let params = { year: year };
+    return axios.get(`${config.baseUrl}/api/admin/statistics/comments/write`,{ params });
+}
+
+function fetchedCommentCategoryStatistics(year) {
+    let params = { year: year };
+    return axios.get(`${config.baseUrl}/api/admin/statistics/comments/category`, { params });
+}
+
+function fetchedCommentGenderStatistics(year) {
+    let params = { year: year };
+    return axios.get(`${config.baseUrl}/api/admin/statistics/comments/gender`, { params });
 }

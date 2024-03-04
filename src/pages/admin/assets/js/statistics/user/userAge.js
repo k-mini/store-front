@@ -8,11 +8,11 @@ export {
 
 function initUserAgeData() {
     return {
-        labels: ["10대", "20대", "30대", "40대", "50대", "60대"],
+        labels: ["10대", "20대", "30대", "40대", "50대", "60대", "70대"],
         datasets: [
             {
                 label: "연령대",
-                data: [56, 170, 245, 120, 98, 49],
+                data: [56, 170, 245, 120, 98, 49, 51],
                 
                 // backgroundColor: "#38ABF2",
             },
@@ -36,7 +36,7 @@ let userAgeOptions = {
             //     unit: "month",
             // },
             ticks: {
-                maxTicksLimit: 6,
+                maxTicksLimit: 7,
             },
             grid: {
                 display: false,

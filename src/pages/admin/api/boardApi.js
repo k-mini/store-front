@@ -3,6 +3,8 @@ import axios from 'axios';
 export {
     deleteBoard,
     deleteBoards,
+    fetchedBoardWriteStatistics,
+    fetchedBoardCategoryStatistics,
 }
 
 const config = {
@@ -20,4 +22,14 @@ function deleteBoards(boardIds) {
             boardIds: boardIds.join(',')
         }
     });
+}
+
+function fetchedBoardWriteStatistics(year) {
+    let params = { year: year};
+    return axios.get(`${config.baseUrl}/api/admin/statistics/boards/write`, { params });
+}
+
+function fetchedBoardCategoryStatistics(year) {
+    let params = { year: year};
+    return axios.get(`${config.baseUrl}/api/admin/statistics/boards/category`, { params });
 }

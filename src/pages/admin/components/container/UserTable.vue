@@ -74,6 +74,8 @@ const columns = [
   { data: "email", title: "이메일", footer: "이메일" },
   { data: "role", title: "권한", footer: "권한" },
   { data: "userStatus", title: "유저 상태", footer: "유저 상태" },
+  { data: "gender", title: "성별", footer: "성별" },
+  { data: "birthdate", title: "생년월일", footer: "생년월일" },
   { data: "createdDate", title: "생성 날짜", footer: "생성 날짜" },
   {
     data: "lastModifiedDate",
