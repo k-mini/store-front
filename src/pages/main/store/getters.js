@@ -7,7 +7,20 @@ export default {
         return state.categoryMap;
     },
     getAuthentication(state) {
-        return state.authentication;
+        if (state.authentication == undefined) {
+            return {
+                userId: '',
+                email: '',
+                username: '',
+                authorities: [],
+                userstatus: null,
+                thumbnail: null,
+                userRole: null,
+            }
+        }
+        else {
+            return state.authentication;
+        }
     },
     getPageResult(state) {
         return state.pageResult;

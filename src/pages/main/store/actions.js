@@ -9,6 +9,7 @@ import {
     processJoin,
     processLogin,
     updateUser,
+    fetchAuthentication,
 } from '../api/userApi';
 
 import {
@@ -36,11 +37,19 @@ export default {
         const response = await processLogin(email, password);
         // console.log(response);
         context.commit('SET_AUTHENTICATION', response.data);
+        context.commit('IS_AUTHENTICATED', true);
         return response;
     },
 
     async PROCESS_JOIN(context, { email, username, password, passwordCheck, file }) {
         const response = await processJoin(email, username, password, passwordCheck, file)
+        return response;
+    },
+
+    async FETCH_AUTHENTICATION(context, { token }) {
+        const response = await fetchAuthentication(token);
+        context.commit('SET_AUTHENTICATION', response.data);
+        context.commit('IS_AUTHENTICATED', true);
         return response;
     },
     
@@ -70,7 +79,7 @@ export default {
     },
 
     async GET_PAGE_DETAIL(context, { category, subCategory, boardId }) {
-        console.log('GET_PAGE_DETAIL 시작');
+        // console.log('GET_PAGE_DETAIL 시작');
         const response = await fetchBoardDetail(category, subCategory, boardId);
         var categoryMap = context.state.categoryMap;
         console.log('상세 페이지 조회 완료', response);

@@ -285,7 +285,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapActions } from 'vuex';
 export default {
   props: ['title'],
   data() {
@@ -293,9 +293,6 @@ export default {
       email: '',
       password: '',
     }
-  },
-  coumputed: {
-    ...mapGetters(['getAuthentication']),
   },
   methods: {
     ...mapActions(['PROCESS_LOGIN']),

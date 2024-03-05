@@ -11,12 +11,13 @@
             <!-- 작성자가 올린 그림 -->
             <img
               :src="
-                getPageDetail.boardThumbnail != null
+                getPageDetail?.boardThumbnail != null
                   ? '/images/' + getPageDetail.boardThumbnail
                   : require('@/pages/main/assets/images/blog/blog-details-01.jpg')
               "
               alt="image"
               class="h-full w-full object-cover object-center"
+              onerror="this.style.display='none';"
             />
             <div
               class="absolute top-0 left-0 z-10 flex h-full w-full items-end bg-gradient-to-t from-dark-700 to-transparent"
@@ -27,12 +28,12 @@
                     <!-- 회원 썸네일 -->
                     <img
                       :src="
-                        getPageDetail.userThumbnail != null
-                          ? 'images/' + getPageDetail.userThumbnail
-                          : '/assets/images/blog/author-01.png'
-                      "
+                        getPageDetail?.userThumbnail != null
+                          ? '/images/' + getPageDetail.userThumbnail
+                          : '/assets/images/blog/author-01.png'"
                       alt="image"
                       class="w-full"
+                      onerror="this.style.display='none';"
                     />
                   </div>
                   <p class="text-base font-medium text-white">
@@ -85,7 +86,7 @@
                         />
                       </svg>
                     </span>
-                    {{ getPageDetail.createdDate }}
+                    {{ getPageDetail?.createdDate }}
                   </p>
 
                   <p
@@ -109,7 +110,7 @@
                         />
                       </svg>
                     </span>
-                    {{ getPageDetail.commentTotalCount }}
+                    {{ getPageDetail?.commentTotalCount }}
                   </p>
                   <p class="flex items-center text-sm font-medium text-white">
                     <span class="mr-3">
@@ -127,7 +128,7 @@
                         />
                       </svg>
                     </span>
-                    {{ getPageDetail.views }}
+                    {{ getPageDetail?.views }}
                   </p>
                 </div>
               </div>
@@ -139,20 +140,21 @@
             <div class="w-full px-4 lg:w-8/12">
               <div>
                 <h2
-                  v-text="getPageDetail.title"
+                  v-text="getPageDetail?.title"
                   class="wow fadeInUp mb-6 text-[26px] font-bold leading-snug text-dark sm:text-3xl sm:leading-snug md:text-4xl md:leading-snug"
                   data-wow-delay=".1s"
                 ></h2>
 
                 <img
-                  v-if="getPageDetail.boardThumbnail != null"
-                  :src="'/images/' + getPageDetail.boardThumbnail"
+                  v-if="getPageDetail?.boardThumbnail != null"
+                  :src="'/images/' + getPageDetail?.boardThumbnail"
                   alt="image"
                   class="h-full w-1/2 object-cover object-center"
+                  onerror="this.style.display='none';"
                 />
 
                 <p
-                  v-text="getPageDetail.content"
+                  v-text="getPageDetail?.content"
                   class="wow fadeInUp mb-8 text-base leading-relaxed text-body-color"
                   data-wow-delay=".1s"
                 ></p>
@@ -164,13 +166,13 @@
                       id="comment-total"
                       class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white"
                     >
-                      댓글 ({{ getPageDetail.commentTotalCount }})
+                      댓글 ({{ getPageDetail?.commentTotalCount }})
                     </h2>
                     <div>
                       <button
                         v-if="
-                          getPageDetail.writerId !== getAuthentication.userId &&
-                          getPageDetail.tradePossible == true
+                          getPageDetail?.writerId !== getAuthentication.userId &&
+                          getPageDetail?.tradePossible == true
                         "
                         id="board-trade"
                         type="button"
@@ -180,7 +182,7 @@
                       </button>
                       <router-link
                         v-if="
-                          getPageDetail.writerId === getAuthentication.userId
+                          getPageDetail?.writerId === getAuthentication.userId
                         "
                         id="board-update"
                         :to="`/board/trade/${subCategory}/${getPageDetail.id}/form`"
@@ -191,7 +193,7 @@
                       </router-link>
                       <button
                         v-if="
-                          getPageDetail.writerId === getAuthentication.userId
+                          getPageDetail?.writerId === getAuthentication.userId
                         "
                         id="board-delete"
                         type="button"
@@ -221,7 +223,7 @@
                       ></textarea>
                     </div>
                     <button
-                      @click="this.SAVE_COMMENT({ boardId: getPageDetail.id})"
+                      @click="this.SAVE_COMMENT({ boardId: getPageDetail?.id})"
                       type="button"
                       class="mb-5 inline-block rounded bg-primary py-1 px-4 text-center text-xs font-semibold leading-loose text-white"
                     >
@@ -231,7 +233,7 @@
 
                   <!-- 부모 댓글 시작 -->
                   <div
-                    v-for="comment in getPageDetail.comments"
+                    v-for="comment in getPageDetail?.comments"
                     :key="comment.id"
                     :id="`comment-${comment.id}`"
                     class="mb-6 text-base bg-white rounded-lg dark:bg-gray-900"
@@ -269,7 +271,7 @@
                         <button
                           @click="this.DELETE_COMMENT({
                             commentId : comment.id,
-                            commentTotalCount: getPageDetail.commentTotalCount
+                            commentTotalCount: getPageDetail?.commentTotalCount
                           })"
                           v-if="
                             `${
@@ -369,7 +371,7 @@
                           <button
                             @click="this.DELETE_COMMENT({
                              commentId: reply.id,
-                             commentTotalCount: getPageDetail.commentTotalCount 
+                             commentTotalCount: getPageDetail?.commentTotalCount 
                             })"
                             v-if="
                               `${
@@ -407,8 +409,8 @@
                         </div>
                         <button
                           @click="this.UPDATE_COMMENT({
-                            boardId: getPageDetail.id,
-                            commentId: reply.id
+                            boardId: getPageDetail?.id,
+                            commentId: reply?.id
                           })"
                           type="button"
                           class="mb-5 inline-block rounded bg-primary py-1 px-4 text-center text-xs font-semibold leading-loose text-white"
@@ -438,8 +440,8 @@
                       </div>
                       <button
                         @click="this.SAVE_REPLY_COMMENT({
-                          boardId: getPageDetail.id,
-                          topCommentId: comment.id,
+                          boardId: getPageDetail?.id,
+                          topCommentId: comment?.id,
                         })"
                         type="button"
                         class="mb-5 inline-block rounded bg-primary py-1 px-4 text-center text-xs font-semibold leading-loose text-white"
@@ -665,7 +667,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import {
   replyToggle,
   updateToggle,
@@ -693,15 +695,20 @@ export default {
       "SAVE_REPLY_COMMENT",
       "UPDATE_COMMENT",
       "DELETE_COMMENT"]),
+    ...mapMutations(['SET_PAGE_DETAIL']),
     replyToggle,
     updateToggle,
   },
-  beforeRouteUpdate: (to, from, next) => {
+  beforeRouteUpdate(to, from, next) {
     this.GET_PAGE_DETAIL({
       category: to.params.categoryName,
       subCategory: to.params.subCategoryName,
       boardId: to.params.boardId,
     });
+    next();
+  },
+  beforeRouteLeave(to, from, next) {
+    this.SET_PAGE_DETAIL(null);
     next();
   },
   created() {

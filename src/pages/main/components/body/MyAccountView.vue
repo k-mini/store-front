@@ -59,6 +59,7 @@
                     class="upload-name"
                     value="첨부파일"
                     placeholder="첨부파일"
+                    readonly
                   />
                   <label for="file">파일찾기</label>
                   <input type="file" id="file" @change="previewFile()"/>

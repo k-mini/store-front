@@ -11,6 +11,7 @@ export const store = createStore({
         pageResult: {},
         pageDetail: {},
         authentication: null,
+        isAuthenticated: false,
     },
     getters,
     actions,

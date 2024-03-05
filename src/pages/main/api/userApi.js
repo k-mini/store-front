@@ -10,6 +10,7 @@ export {
     processJoin,
     fetchUserProfileImage,
     updateUser,
+    fetchAuthentication,
 }
 
 // 로그인 요청 (POST)
@@ -72,9 +73,17 @@ function updateUser(userId, params) {
         })
 }
 
-
 // 회원 프로필 수정할 때 기존 프로필에 있었던 이미지를 가져와서 input에 세팅하는 메서드
 function fetchUserProfileImage(thumbnailUrl) {
     let url = `http://localhost:9090/images/${thumbnailUrl}`;
     return axios.get(url, { responseType: 'blob'});
+}
+
+// 인증 정보 가져오기
+function fetchAuthentication(token) {
+    return axios.get(`${config.baseUrl}/api/user/authentication`, {
+        headers: {
+            Authorization: token,
+        }
+    })
 }

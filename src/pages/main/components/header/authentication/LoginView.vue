@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 import { removeJwtToken } from '../../../api/jwtApi';
 export default {
 
@@ -48,11 +49,11 @@ export default {
     },
   },
   methods: {
+    ...mapMutations(['SET_AUTHENTICATION']),
     logout() {
-      console.log('로그아웃 처리');
       removeJwtToken();
-      window.location = '/';
-    }
+      this.SET_AUTHENTICATION(null);
+    },
   }
   
 };

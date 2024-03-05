@@ -35,6 +35,7 @@ import CategoryView from './category/CategoryView.vue';
 import LoginView from './authentication/LoginView.vue';
 import AnonymousView from './authentication/AnonymousView.vue';
 import BannerView from './banner/BannerView.vue';
+import { mapActions } from 'vuex';
 
 export default {
   components: {
@@ -50,6 +51,9 @@ export default {
     getAuthentication() {
       return this.$store.state.authentication;
     },
+  },
+  methods: {
+    ...mapActions(['FETCH_AUTHENTICATION']),
   },
 };
 </script>
