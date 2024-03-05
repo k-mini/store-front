@@ -705,6 +705,7 @@ export default {
     next();
   },
   created() {
+    console.log('boardDetail 시작');
     this.GET_PAGE_DETAIL({
       category: this.$route.params.categoryName,
       subCategory: this.$route.params.subCategoryName,

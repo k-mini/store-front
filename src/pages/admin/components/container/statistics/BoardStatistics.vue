@@ -48,11 +48,11 @@
 <script>
 import { Line, Bar } from "vue-chartjs";
 import {
-  writeData,
+  initWriteData,
   writeOptions,
 } from "../../../assets/js/statistics/board/boardWrite";
 import {
-  categoryData,
+  initCategoryData,
   categoryOptions,
 } from "../../../assets/js/statistics/board/boardCategory";
 import { mapActions } from 'vuex';
@@ -65,14 +65,14 @@ export default {
   data() {
     return {
       // 게시물 월별 이용자수 차트
-      writeData: writeData,
+      writeData: initWriteData(),
       writeOptions: writeOptions,
       writeLoaded: false,
       writeYear: 2024,
       // 게시물 월별 이용자수 차트 종료
 
       // 게시물 카테고리별 작성 수 차트
-      categoryData: categoryData,
+      categoryData: initCategoryData(),
       categoryOptions: categoryOptions,
       categoryLoaded: false,
       categoryYear: 2024,

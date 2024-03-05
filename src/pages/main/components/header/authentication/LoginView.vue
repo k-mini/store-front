@@ -26,24 +26,33 @@
         </router-link>
       </div>
       <div>
-        <router-link
-          :to="`/logout`"
+        <a
+          href="#"
           class="signUpBtn rounded-lg bg-white bg-opacity-20 mx-2 py-3 px-6 text-base font-medium text-white duration-300 ease-in-out hover:bg-opacity-100 hover:text-dark"
+          @click="logout()"
         >
           로그아웃
-        </router-link>
+        </a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { removeJwtToken } from '../../../api/jwtApi';
 export default {
 
   computed: {
     getAuthentication() {
       return this.$store.state.authentication;
     },
+  },
+  methods: {
+    logout() {
+      console.log('로그아웃 처리');
+      removeJwtToken();
+      window.location = '/';
+    }
   }
   
 };

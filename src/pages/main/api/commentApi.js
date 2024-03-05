@@ -1,5 +1,6 @@
 import axios from 'axios';
 import $ from 'jquery';
+import { getJwtToken } from './jwtApi';
 
 const config = {
     baseUrl: 'http://localhost:9090'
@@ -25,7 +26,9 @@ function saveComment(boardId, topCommentId, content) {
         content: content,
         topCommentId: topCommentId,
     }
-    return axios.post(`${config.baseUrl}/api/comment`, data);
+    return axios.post(`${config.baseUrl}/api/comment`, data, {
+        headers : { Authorization: getJwtToken() },
+    });
 }
 
 function updateComment(boardId, commentId, content) {
@@ -34,11 +37,15 @@ function updateComment(boardId, commentId, content) {
         commentId: commentId,
         content: content,
     }
-    return axios.patch(`${config.baseUrl}/api/comment/${commentId}`, data);
+    return axios.patch(`${config.baseUrl}/api/comment/${commentId}`, data, {
+        headers: { Authorization: getJwtToken() },
+    });
 }
 
 function deleteComment(commentId) {
-    return axios.delete(`${config.baseUrl}/api/comment/${commentId}`);
+    return axios.delete(`${config.baseUrl}/api/comment/${commentId}`, {
+        headers: { Authorization: getJwtToken() },
+    });
 }
 
 function replyToggle(commentId) {

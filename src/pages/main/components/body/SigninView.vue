@@ -301,8 +301,9 @@ export default {
     ...mapActions(['PROCESS_LOGIN']),
     processLogin() {
       this.PROCESS_LOGIN({ email: this.email, password: this.password})
-        .then(()=>{
-          console.log('로그인 성공');
+        .then((res)=>{
+          console.log('로그인 성공',res);
+          localStorage.setItem("Authorization", "Bearer " + res.headers.token)
           this.$router.push('/');
         })
         .catch((err)=>{

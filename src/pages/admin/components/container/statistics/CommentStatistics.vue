@@ -134,6 +134,7 @@ export default {
       .then((res) => {
         let chartData = res.data.data;
         let newDataSet = chartData.datasets[0];
+        console.log(newDataSet);
         this.commentCommentCategoryRatioData.datasets[0] = newDataSet;
         this.categoryLoaded = true;
       })

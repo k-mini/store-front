@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getJwtToken } from './jwtApi';
 
 const config = {
     baseUrl: 'http://localhost:9090'
@@ -15,11 +16,15 @@ export {
 
 // 게시물 요청 (GET)
 function fetchBoardLists(categoryName, subCategoryName, searchType, searchKeyword, page) {
+    console.log('fetchBoardList');
     return axios.get(`${config.baseUrl}/api/boards/${categoryName}/${subCategoryName}`, {
         params: {
             searchType: searchType,
             searchKeyword: searchKeyword,
             page: page,
+        },
+        headers: {
+            Authorization: getJwtToken(),
         }
     });
 }
@@ -31,6 +36,9 @@ function fetchBoardDetail(categoryName, subCategoryName, boardId) {
             categoryName: categoryName,
             subCategoryName: subCategoryName,
             boardId: boardId,
+        },
+        headers: {
+            Authorization: getJwtToken(),
         }
     });
 }
@@ -56,6 +64,7 @@ function createBoard(categoryName, subCategoryName, params) {
     return axios.post(`${config.baseUrl}/api/board/${categoryName}/${subCategoryName}`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
+            Authorization: getJwtToken(),
         }
     })
 }
@@ -80,6 +89,7 @@ function updateBoard(categoryName, subCategoryName, boardId, params) {
     return axios.patch(`${config.baseUrl}/api/board/${categoryName}/${subCategoryName}/${boardId}`, formData, {
         headers : {
             'Content-Type' : 'multipart/form-data',
+            Authorization: getJwtToken(),
         }
     })
 }

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getJwtToken } from './jwtApi';
 
 const config = {
     baseUrl: 'http://localhost:9090'
@@ -60,11 +61,15 @@ function updateUser(userId, params) {
     // file part
     formData.append("file", params.file);
 
-    return axios.patch(`${config.baseUrl}/api/user/${userId}`, formData, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    })
+    return axios.patch(`${config.baseUrl}/api/user/${userId}`, formData, 
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }, 
+        { 
+            headers : { Authorization: getJwtToken()},
+        })
 }
 
 

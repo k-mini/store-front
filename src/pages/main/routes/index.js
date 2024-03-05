@@ -36,13 +36,13 @@ let router = createRouter({
         },
         {
             path: "/board/:category/:subCategory/form",
-            name: "form",
+            name: "saveForm",
             component: BoardForm,
             props : { title: '글 쓰기'}
         },
         {
-            path: "/board/:category/:subCategory/:boardId/form",
-            name: "form",
+            path: "/board/:category/:subCategory/:boardId(\\d+)/form",
+            name: "updateForm",
             component: BoardForm,
             props : { title: '글 수정 페이지'}
         },
@@ -52,15 +52,14 @@ let router = createRouter({
             component: BoardList,
         },
         {
-            path: '/board/:categoryName/:subCategoryName/:boardId',
+            path: '/board/:categoryName/:subCategoryName/:boardId(\\d+)',
             name: 'boardetail',
             component: BoardDetail,
             // beforeEnter: (to, from, next) => {
             //     console.log(to);
-            //     console.log(from);
             //     next();
             // },
-        }
+        },
     ]
 });
 

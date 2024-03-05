@@ -1,19 +1,21 @@
 
 export {
-    categoryData,
+    initCategoryData,
     categoryOptions,
 }
 
-let categoryData = {
-    labels: ["10대", "20대", "30대", "40대", "50대", "60대","70대"],
-    datasets: [
-        {
-            label: "월별 카테고리별 작성 수",
-            data: [56, 170, 245, 120, 98, 49, 10],
-            // backgroundColor: "#38ABF2",
-        },
-    ],
-};
+function initCategoryData() {
+    return {
+        labels: ["10대", "20대", "30대", "40대", "50대", "60대", "70대"],
+        datasets: [
+            {
+                label: "월별 카테고리별 작성 수",
+                data: [56, 170, 245, 120, 98, 49, 10],
+                // backgroundColor: "#38ABF2",
+            },
+        ],
+    }
+}
 
 let categoryOptions = {
     maintainAspectRatio: false,

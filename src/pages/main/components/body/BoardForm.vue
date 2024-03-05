@@ -8,9 +8,9 @@
             data-wow-delay=".15s"
           >
             <div class="mb-10 text-center">
-              <a href="/" class="mx-auto inline-block max-w-[160px]">
+              <router-link :to="`/`" class="mx-auto inline-block max-w-[160px]">
                 <img src="../../assets/images/logo/logo.svg" alt="logo" />
-              </a>
+              </router-link>
             </div>
 
             <form method="post" v-on:submit.prevent="saveBoard">
@@ -361,10 +361,11 @@ export default {
     },
   },
   created() {
+    console.log('boardForm 시작');
     this.$store.commit("SET_TITLE", this.title);
     this.boardTitle = this.getPageDetail.title;
     this.content = this.getPageDetail.content;
-
+    console.log('boardform');
     let thumbnailUrl = this.getPageDetail.boardThumbnail;
 
     if (thumbnailUrl != undefined) {

@@ -10,7 +10,7 @@ let commentCategoryRatioType = "doughnut";
 
 function initCommentCategoryRatioData() {
   return {
-    labels: ["전자 게시판", "의류 게시판","자유 게시판","공지사항 게시판"],
+    labels: ["전자 게시판", "의류 게시판","자유 게시판", "공지사항 게시판"],
     datasets: [
       {
         data: [30,10,25,35],
@@ -45,7 +45,7 @@ let commentCategoryRatioOptions = {
           return `${TooltipItem.label}`;
         },
         label: function (TooltipItem) {
-          return `${TooltipItem.raw}%`;
+          return `${TooltipItem.raw}개`;
         },
       },
     },

@@ -72,6 +72,12 @@ export default {
         searchType: to.query.searchType,
         searchKeyword: to.query.searchKeyword,
         page: to.query.page,
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status == 401) {
+          this.$router.push('/auth/signin');
+        }
       });
     }
     next();
@@ -84,6 +90,12 @@ export default {
         searchType: this.searchType,
         searchKeyword: this.searchKeyword,
         page: this.pageNumber,
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status == 401) {
+          this.$router.push('/auth/signin');
+        }
       });
     }
   },

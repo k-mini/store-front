@@ -58,10 +58,10 @@ export default {
     },
 
     async GET_BOARDLISTS(context, { category, subCategory, searchType, searchKeyword, page }) {
-        // console.log('GET_BOARDLISTS 시작');
+        console.log('GET_BOARDLISTS 시작');
         // console.log(category, subCategory, searchType, searchKeyword, page)
-
-        const response = await fetchBoardLists(category, subCategory, searchType, searchKeyword, page);
+        let response;
+        response = await fetchBoardLists(category, subCategory, searchType, searchKeyword, page);
         var categoryMap = context.state.categoryMap;
 
         context.commit('SET_TITLE', categoryMap.get(subCategory.toUpperCase()) + ' 게시판');
@@ -70,6 +70,7 @@ export default {
     },
 
     async GET_PAGE_DETAIL(context, { category, subCategory, boardId }) {
+        console.log('GET_PAGE_DETAIL 시작');
         const response = await fetchBoardDetail(category, subCategory, boardId);
         var categoryMap = context.state.categoryMap;
         console.log('상세 페이지 조회 완료', response);
