@@ -16,7 +16,6 @@ export {
 
 // 게시물 요청 (GET)
 function fetchBoardLists(categoryName, subCategoryName, searchType, searchKeyword, page) {
-    console.log('fetchBoardList');
     return axios.get(`${config.baseUrl}/api/boards/${categoryName}/${subCategoryName}`, {
         params: {
             searchType: searchType,

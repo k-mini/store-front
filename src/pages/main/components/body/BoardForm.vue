@@ -15,7 +15,7 @@
 
             <form method="post" v-on:submit.prevent="saveBoard">
               <div class="mb-6">
-                <div class="flex items-center md:justify-start">
+                <div class="flex items-center md:justify-start mb-3">
                   <label
                     for="message"
                     class="mx-2 my-1 text-2xl font-bold text-dark"
@@ -31,21 +31,65 @@
               </div>
 
               <div class="mb-6">
+                <div class="flex items-center md:justify-start mb-3">
+                  <label
+                    class="mx-2 my-1 text-2xl font-bold text-dark"
+                    >카테고리</label
+                  >
+                </div>
+                <select
+                  v-model="categoryValue"
+                  class="block w-full px-4 py-3 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option value="" selected>카테고리</option>
+                  <option v-for="category in categories" 
+                         :key="category.categoryName" :value="category.categoryName.toLowerCase()">
+                  {{ category.categoryKoName }}
+                  </option>
+                  <!-- <option value="U11">United States</option> -->
+                  <!-- <option value="C11">Canada</option> -->
+                </select>
+              </div>
+
+              <div class="mb-6">
+                <div class="flex items-center md:justify-start mb-3">
+                  <label
+                    class="mx-2 my-1 text-2xl font-bold text-dark"
+                    >서브 카테고리</label
+                  >
+                </div>
+                <select
+                  v-model="subCategoryValue"
+                  class="block w-full px-4 py-3 text-base text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                >
+                  <option value="" selected>서브 카테고리</option>
+                  <option v-for="category in subCategories" 
+                         :key="category.categoryName" :value="category.categoryName.toLowerCase()">
+                  {{ category.categoryKoName }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="mb-6">
                 <div class="flex items-center md:justify-start">
                   <label
-                    for="message"
                     class="mx-2 my-1 text-2xl font-bold text-dark"
                     >사진</label
                   >
                 </div>
-                <div class="filebox" style="margin : 20px 0px;">
-                  <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
-                  <label for="file">파일찾기</label> 
-                  <input type="file" id="file">
+                <div class="filebox" style="margin: 20px 0px">
+                  <input
+                    class="upload-name"
+                    value="첨부파일"
+                    placeholder="첨부파일"
+                    readonly
+                  />
+                  <label for="file">파일찾기</label>
+                  <input type="file" id="file" />
                 </div>
 
-                <div style="margin : 20px 15px;">
-                  <img id="fileImage"/>
+                <div style="margin: 20px 15px">
+                  <img id="fileImage" />
                 </div>
               </div>
 
@@ -53,7 +97,7 @@
                 <div class="flex items-center md:justify-start">
                   <label
                     for="message"
-                    class="mx-2 my-1 text-2xl font-bold text-dark"
+                    class="mx-2 my-1 text-2xl font-bold text-dark mb-3"
                     >내용</label
                   >
                 </div>
@@ -311,33 +355,59 @@ export default {
     return {
       boardTitle: "",
       content: "",
+      categoryValue: '',
+      subCategoryValue: '',
     };
   },
   computed: {
-    ...mapGetters(["getPageDetail"]),
-    category() {
-      return this.$route.params.category;
-    },
-    subCategory() {
-      return this.$route.params.subCategory;
-    },
+    ...mapGetters(["getPageDetail", "getCategories"]),
     boardId() {
       return this.$route.params.boardId;
+    },
+    categories() {
+      console.log('categories 계산 시작');
+      var result = [];
+      for (var category of this.getCategories) {
+        if (category.categoryName == 'ALL') {
+          continue;
+        }
+        result.push({
+          categoryName: category.categoryName,
+          categoryKoName: category.categoryKoName,
+        })
+      }
+      return result;
+    },
+    subCategories() {
+      console.log('subCategories 계산 시작');
+      var result = [];
+      for (var category of this.getCategories) {
+        for (var subCategory of category.subCategories) {
+          if (this.categoryValue != category.categoryName.toLowerCase()) {
+            continue;
+          }
+          result.push({
+            categoryName: subCategory.categoryName,
+            categoryKoName: subCategory.categoryKoName, 
+          });
+        }
+      }
+      return result;
     },
   },
   methods: {
     ...mapActions(["CREATE_BOARD", "UPDATE_BOARD"]),
     saveBoard() {
       let file = $("#file")[0].files[0];
-      let category = this.category;
-      let subCategory = this.subCategory;
+      let category = this.categoryValue;
+      let subCategory = this.subCategoryValue;
       let boardId = this.boardId;
       let params = {
         title: this.boardTitle,
         content: this.content,
         file: file,
       };
-      console.log("saveBoard 시작");
+
       // 생성
       if (boardId == undefined) {
         this.CREATE_BOARD({ category, subCategory, params })
@@ -361,73 +431,71 @@ export default {
     },
   },
   created() {
-    console.log('boardForm 시작');
+    console.log("boardForm 시작");
     this.$store.commit("SET_TITLE", this.title);
     this.boardTitle = this.getPageDetail.title;
     this.content = this.getPageDetail.content;
-    console.log('boardform');
     let thumbnailUrl = this.getPageDetail.boardThumbnail;
 
     if (thumbnailUrl != undefined) {
       let url = `http://localhost:9090/images/${thumbnailUrl}`;
-      fetchImage(thumbnailUrl)
-        .then((res) => {
-          let ext = url.split(".").pop();
-          let fileName = url.split("/").pop();
-          let file = new File([res], fileName, { type: `image/${ext}` });
+      fetchImage(thumbnailUrl).then((res) => {
+        let ext = url.split(".").pop();
+        let fileName = url.split("/").pop();
+        let file = new File([res], fileName, { type: `image/${ext}` });
 
-          const dataTransfer = new DataTransfer();
-          dataTransfer.items.add(file);
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
 
-          // fileList 등록
-          $("#file")[0].files = dataTransfer.files;
+        // fileList 등록
+        $("#file")[0].files = dataTransfer.files;
 
-          // filePath 등록
-          let filePath = $('#file').val();
-          $('.upload-name').val(filePath);
-          $('#fileImage').attr('src', url);
-        });
+        // filePath 등록
+        let filePath = $("#file").val();
+        $(".upload-name").val(filePath);
+        $("#fileImage").attr("src", url);
+      });
     }
   },
   mounted() {
     // file input 변경 될 때 마다 파일 이름 이벤트
-    $("#file").on('change', function(){
+    $("#file").on("change", function () {
       var fileName = $("#file").val();
       $(".upload-name").val(fileName);
     });
-  }
+  },
 };
 </script>
 
 <style>
 .filebox .upload-name {
-    display: inline-block;
-    height: 40px;
-    padding: 0 0px;
-    vertical-align: middle;
-    border: 1px solid #dddddd;
-    width: 78%;
-    color: #999999;
+  display: inline-block;
+  height: 40px;
+  padding: 0 0px;
+  vertical-align: middle;
+  border: 1px solid #dddddd;
+  width: 78%;
+  color: #999999;
 }
 
 .filebox label {
-    display: inline-block;
-    padding: 10px 20px;
-    color: #fff;
-    vertical-align: middle;
-    background-color: #999999;
-    cursor: pointer;
-    height: 40px;
-    margin-left: 10px;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #fff;
+  vertical-align: middle;
+  background-color: #999999;
+  cursor: pointer;
+  height: 40px;
+  margin-left: 10px;
 }
 
 .filebox input[type="file"] {
-    position: absolute;
-    width: 0;
-    height: 0;
-    padding: 0;
-    overflow: hidden;
-    border: 0;
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
 }
 </style>
 

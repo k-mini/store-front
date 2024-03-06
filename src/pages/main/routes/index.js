@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router';
-// import HelloView from '../components/HelloView.vue';
 import BodyIndexView from '../components/body/BodyIndexView.vue';
 import SigninView from '../components/body/SigninView.vue';
 import SignupView from '../components/body/SignupView.vue';
@@ -42,35 +41,60 @@ let router = createRouter({
             name: "saveForm",
             component: BoardForm,
             meta: { authRequired: true },
-            props: { title: '글 쓰기' }
+            props: { title: '글 쓰기' },
+            beforeEnter: (to, from, next) => {
+                checkCategoryAndNext(to.params.category, to.params.subCategory, next);
+            },
         },
         {
             path: "/board/:category/:subCategory/:boardId(\\d+)/form",
             name: "updateForm",
             component: BoardForm,
             meta: { authRequired: true },
-            props: { title: '글 수정 페이지' }
+            props: { title: '글 수정 페이지' },
+            beforeEnter: (to, from, next) => {
+                checkCategoryAndNext(to.params.category, to.params.subCategory, next);
+            },
         },
         {
-            path: '/boards/:categoryName/:subCategoryName',
-            name: 'boardList',
+            path: '/boards',
+            name: 'BoardList',
             component: BoardList,
+            beforeEnter: (to, from, next) => {
+                checkCategoryAndNext(to.params.categoryName, to.params.subCategoryName, next);
+            },
+            children: [
+                {
+                    path: '/boards/:categoryName/:subCategoryName',
+                    name: 'trade',
+                    component: () => import('../components/body/list/ContentView.vue'),
+                },
+            ]
         },
         {
             path: '/board/:categoryName/:subCategoryName/:boardId(\\d+)',
             name: 'boardetail',
             component: BoardDetail,
-            // beforeEnter: (to, from, next) => {
-            //     console.log(to);
-            //     next();
-            // },
+            beforeEnter: (to, from, next) => {
+                checkCategoryAndNext(to.params.categoryName, to.params.subCategoryName, next);
+            },
         },
     ]
 });
 
+function checkCategoryAndNext(categoryName, subCategoryName, next) {
+    let categoryMap = store.state.categoryMap;
+    if (categoryMap.get(categoryName.toUpperCase()) != undefined && categoryMap.get(subCategoryName.toUpperCase()) != undefined) {
+        next();
+    }
+    else {
+        next('/');
+    }
+}
+
 router.beforeEach(async (to, from, next) => {
-    console.log('beforeEach', to);
-    console.log(store);
+    // console.log('beforeEach', to);
+    // console.log(store);
 
     await attemptAuthentication();
     let isAuthenticated = store.state.isAuthenticated;
@@ -99,7 +123,6 @@ async function attemptAuthentication() {
     if (store.state.isAuthenticated == false && token != null) {
         try {
             await store.dispatch('FETCH_AUTHENTICATION', { token });
-            console.log('자동 인증 성공');
         } catch (err) {
             console.log('인증 실패', err);
         }

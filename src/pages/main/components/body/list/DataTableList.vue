@@ -55,7 +55,8 @@ const ajax = {
 
     data.page = page;
     newData.draw = data.draw;
-    console.log('보낼 데이터', data);
+    newData.page = data.page
+    console.log('보낼 데이터', newData);
     return newData;
   },
   dataSrc: {

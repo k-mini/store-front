@@ -5,27 +5,27 @@ import { mapGetters } from 'vuex';
     <div class="w-full px-4 md:w-1/2">
       <ul class="list-style-none flex md:justify-start items-center">
         <li v-if="pageAttr?.prev">
-          <router-link
+          <button
             v-if="
               getPageResult?.searchKeyword == undefined &&
               getPageResult?.searchType == undefined
             "
             class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
-            :to="`/boards/${category}/${subCategory}?page=${startPage - 2}`"
+            @click="changePage({ page: `${startPage - 2}`})"
             aria-label="Previous"
           >
             <span aria-hidden="true">&laquo;</span>
-          </router-link>
-          <router-link
+          </button>
+          <button
             v-else
             class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
-            :to="`/boards/${category}/${subCategory}?page=${startPage - 2}&s=${
-              getPageResult?.searchKeyword
-            }&sType=${getPageResult?.searchType}`"
+            @click="changePage({ page: `${startPage - 2}`, 
+                                 searchKeyword: `${getPageResult?.searchKeyword}`,
+                                 searchType: `${getPageResult?.searchType}` })"
             aria-label="Previous"
           >
             <span aria-hidden="true">&laquo;</span>
-          </router-link>
+          </button>
         </li>
         <div
           v-for="num in pageAttr.endPage - pageAttr.startPage + 1"
@@ -42,47 +42,52 @@ import { mapGetters } from 'vuex';
             </p>
           </li>
           <li aria-current="page" v-else>
-            <router-link
+            <button
               v-if="
                 getPageResult?.searchKeyword == undefined &&
                 getPageResult?.searchType == undefined
               "
               class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
-              :to="`/boards/${category}/${subCategory}?page=${num - 1}`"
+              @click="changePage({ page: `${num - 1}` })"
             >
               {{ num }}
-            </router-link>
-            <router-link
+            </button>
+            <button
               v-else
               class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
-              :to="`/boards/${category}/${subCategory}?page=${num - 1}&s=${
-                pageAttr?.searchKeyword
-              }&sType=${pageAttr?.searchType}`"
-            >
+              @click="changePage({
+                page: `${num -1}`,
+                searchKeyWord: `${pageAttr?.searchKeyword}`,
+                searchType: `${pageAttr?.searchType}`
+              })">
               {{ num }}
-            </router-link>
+            </button>
           </li>
         </div>
         <li v-if="pageAttr?.next">
-          <router-link
+          <button
             v-if="
               getPageResult?.searchKeyword == undefined &&
               getPageResult?.searchType == undefined
             "
             class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
-            :to="`/boards/${category}/${subCategory}?page=${pageAttr.endPage}`"
+            @click="changePage({ page: `${pageAttr.endPage}`})"
             aria-label="Next"
           >
             <span aria-hidden="true">&raquo;</span>
-          </router-link>
-          <router-link
+          </button>
+          <button
             v-else
             class="relative block rounded bg-transparent px-3 py-1.5 text-sm text-neutral-600 transition-all duration-300 hover:bg-neutral-100 dark:text-white dark:hover:bg-neutral-700 dark:hover:text-white"
-            :to="`/boards/${category}/${subCategory}?page=${pageAttr.endPage}&s=${getPageResult?.searchKeyword}&${getPageResult?.searchType}`"
+            @click="changePage({
+              page: `${pageAttr.endPage}`,
+              searchKeyWord: `${getPageResult?.searchKeyword}`,
+              searchType: `${getPageResult?.searchType}`
+            })"
             aria-label="Next"
           >
             <span aria-hidden="true">&raquo;</span>
-          </router-link>
+          </button>
         </li>
       </ul>
     </div>
@@ -117,7 +122,11 @@ import { mapGetters } from 'vuex';
         />
 
         <button
-          @click="searchBoard"
+            @click="changePage({
+              page: 0,
+              searchType: `${this.searchType}`,
+              searchKeyWord: `${this.searchKeyword}`
+            })"
           class="relative z-[2] flex items-center rounded-r bg-primary px-4 py-1 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
           type="submit"
           data-te-ripple-init
@@ -163,6 +172,11 @@ export default {
         pageAttr() {
             return this.$store.state.pageResult.pageAttr;
         },
+    },
+    methods: {
+      changePage(payload) {
+        this.$emit('changePage',payload);
+      },
     },
 };
 </script>

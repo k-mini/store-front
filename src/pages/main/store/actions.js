@@ -61,13 +61,13 @@ export default {
     async FETCH_CATEGORIES(context) {
         const response = await fetchCategories();
         let map = makeCategoryMap(response.data);
+        console.log(response.data);
         context.commit('SET_CATEGORIES', response.data);
         context.commit('SET_CATEGORYMAP', map);
         return response;
     },
 
     async GET_BOARDLISTS(context, { category, subCategory, searchType, searchKeyword, page }) {
-        console.log('GET_BOARDLISTS 시작');
         // console.log(category, subCategory, searchType, searchKeyword, page)
         let response;
         response = await fetchBoardLists(category, subCategory, searchType, searchKeyword, page);
