@@ -76,6 +76,8 @@ const columns = [
   { data: "userStatus", title: "유저 상태", footer: "유저 상태" },
   { data: "gender", title: "성별", footer: "성별" },
   { data: "birthdate", title: "생년월일", footer: "생년월일" },
+  { data: "roadAddress", title: "도로명 주소", footer: "도로명 주소" },
+  { data: "jibunAddress", title: "지번 주소", footer: "지번 주소" },
   { data: "createdDate", title: "생성 날짜", footer: "생성 날짜" },
   {
     data: "lastModifiedDate",

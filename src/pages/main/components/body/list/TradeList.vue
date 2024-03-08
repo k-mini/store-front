@@ -44,7 +44,7 @@ export default {
       });
     },
     callBackPage(payload) {
-      console.log('callBackPage', payload);
+      // console.log('callBackPage', payload);
       this.page = payload.page;
       this.searchType = payload.searchType;
       this.searchKeyword = payload.searchKeyword;
@@ -54,6 +54,11 @@ export default {
   created() {
     this.fetchTrades();
   },
+  watch : {
+    subCategory() {
+      this.fetchTrades();
+    }
+  }
 };
 </script>
 

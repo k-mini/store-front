@@ -41,8 +41,8 @@ export default {
         return response;
     },
 
-    async PROCESS_JOIN(context, { email, username, password, passwordCheck, file }) {
-        const response = await processJoin(email, username, password, passwordCheck, file)
+    async PROCESS_JOIN(context, payload) {
+        const response = await processJoin(payload)
         return response;
     },
 

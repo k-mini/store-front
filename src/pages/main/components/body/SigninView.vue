@@ -34,12 +34,33 @@
                   class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
                 />
               </div>
-              <div class="mb-10">
+              <div class="mb-5">
                 <input
                   type="submit"
                   value="로그인"
                   class="bordder-primary w-full cursor-pointer rounded-md border bg-primary py-3 px-5 text-base text-white transition duration-300 ease-in-out hover:shadow-md"
                 />
+              </div>
+              <div class="mb-6" style="display: flex;
+               align-items: center;
+               justify-content: center;
+               " >
+                <!-- <a 
+                href=
+                "https://kauth.kakao.com/oauth/authorize?client_id=5dbb71fb43b106cae5d359edb655cb4a&redirect_uri=http://localhost:9090/oauth/callback&response_type=code"
+                onclick="window.open(this.href, '_blank', 'width=400, height=400'); return false;"> -->
+                <a href="#" 
+                onclick="window.open('/oauth2/authorization/kakao', '', 'width=500, height=600, top=200, left=200');">
+                  <img class='logo' src="../../assets/images/kakao.png" >
+                </a>
+                <a href="#"
+                onclick="window.open('/oauth2/authorization/google', '', 'width=500, height=600, top=200, left=200');">
+                  <img class='logo' src="../../assets/images/google.png">
+                </a>
+                <a href="#"
+                onclick="window.open('/oauth2/authorization/github', '', 'width=500, height=600, top=200, left=200');">
+                  <img class='logo' src="../../assets/images/github.png">
+                </a>
               </div>
             </form>
 
@@ -315,4 +336,9 @@ export default {
 </script>
 
 <style>
+.logo {
+  width: 60px;
+  height: 60px;
+  margin: 10px;
+}
 </style>

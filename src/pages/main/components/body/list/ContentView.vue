@@ -8,7 +8,7 @@ import CommunityList from "./CommunityList.vue";
 export default {
   computed: {
     componentLoader() {
-      console.log('componentLoader');
+      // console.log('componentLoader');
       const path = this.$route.params.categoryName;
       if (path == "trade") {
         return TradeList;

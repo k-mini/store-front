@@ -7,7 +7,7 @@ import BoardForm from '../components/body/BoardForm.vue';
 import BoardList from '../components/body/BoardList.vue';
 import BoardDetail from '../components/body/BoardDetail.vue';
 import { store } from '../store/index';
-import { getJwtToken } from '../api/jwtApi';
+import { getJwtToken, setJwtToken, removeJwtToken } from '../api/jwtApi';
 
 let router = createRouter({
     history: createWebHistory(),
@@ -92,9 +92,15 @@ function checkCategoryAndNext(categoryName, subCategoryName, next) {
     }
 }
 
-router.beforeEach(async (to, from, next) => {
-    // console.log('beforeEach', to);
+router.beforeEach(async function(to, from, next) {
+    console.log('beforeEach', to);
     // console.log(store);
+    let token = to.query.token;
+    if (token != null) {
+        setJwtToken(token);
+        window.opener.location.href='http://localhost:9090';
+        window.close();
+    }
 
     await attemptAuthentication();
     let isAuthenticated = store.state.isAuthenticated;
@@ -118,12 +124,15 @@ router.beforeEach(async (to, from, next) => {
 })
 
 async function attemptAuthentication() {
-    // 인증 객체가 없는데 jwt 토큰이 있으면 로그인 시도
     let token = getJwtToken();
+    // 인증 객체가 없는데 jwt 토큰이 있으면 로그인 시도
     if (store.state.isAuthenticated == false && token != null) {
         try {
             await store.dispatch('FETCH_AUTHENTICATION', { token });
         } catch (err) {
+            removeJwtToken();
+            store.state.isAuthenticated = false;
+            store.state.authentication = null;
             console.log('인증 실패', err);
         }
     }

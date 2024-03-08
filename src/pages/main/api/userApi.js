@@ -22,21 +22,26 @@ function processLogin(email, password) {
 }
 
 // 회원가입 요청 (POST)
-function processJoin(email, username, password, passwordCheck, file) {
+function processJoin(params) {
     let formData = new FormData();
     
     // UserSaveReqApiDto Part
     let userSaveReqApiDto = {
-        email: email,
-        username: username,
-        password: password,
-        passwordCheck: passwordCheck,
+        email: params.email,
+        username: params.username,
+        password: params.password,
+        passwordCheck: params.passwordCheck,
+        zonecode: params.zonecode,
+        roadAddress: params.roadAddress,
+        jibunAddress: params.jibunAddress,
+        detailAddress: params.detailAddress,
+        gender: params.gender,
     }
     let blob = new Blob([JSON.stringify(userSaveReqApiDto)], { type: "application/json"});
     formData.append("userSaveReqApiDto", blob);
 
     // file Part
-    formData.append("file", file);
+    formData.append("file", params.file);
 
     return axios.post(`${config.baseUrl}/api/user`, formData, {
         headers: {
@@ -55,6 +60,11 @@ function updateUser(userId, params) {
         username: params.username,
         password: params.password,
         passwordCheck: params.passwordCheck,
+        zonecode: params.zonecode,
+        roadAddress: params.roadAddress,
+        jibunAddress: params.jibunAddress,
+        detailAddress: params.detailAddress,
+        gender: params.gender,
     }
     let blob = new Blob([JSON.stringify(userUpdateReqApiDto)], { type: 'application/json'});
     formData.append("userUpdateReqApiDto", blob);
@@ -65,11 +75,9 @@ function updateUser(userId, params) {
     return axios.patch(`${config.baseUrl}/api/user/${userId}`, formData, 
         {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                Authorization: getJwtToken(),
             }
-        }, 
-        { 
-            headers : { Authorization: getJwtToken()},
         })
 }
 

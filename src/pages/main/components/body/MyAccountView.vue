@@ -4,7 +4,7 @@
       <div class="-mx-4 flex flex-wrap">
         <div class="w-full px-4">
           <div
-            class="wow fadeInUp relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white py-14 px-8 text-center sm:px-12 md:px-[60px]"
+            class="wow fadeInUp relative mx-auto max-w-[780px] overflow-hidden rounded-lg bg-white py-14 px-8 text-center sm:px-12 md:px-[60px]"
             data-wow-delay=".15s"
           >
             <div class="mb-10 text-center">
@@ -13,48 +13,125 @@
               </a>
             </div>
             <form
-              th:object="${userUpdateReqDto}"
               method="POST"
               v-on:submit.prevent="updateUser"
             >
-              <div class="mb-6">
-                <input
-                  v-model="email"
-                  type="email"
-                  placeholder="이메일을 입력해 주세요"
-                  class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
-                  readonly
-                />
-              </div>
-              <div class="mb-6">
-                <input
-                  v-model="username"
-                  type="text"
-                  placeholder="이름을 입력해 주세요"
-                  class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
-                  readonly
-                />
+                <div class="mb-3">
+                  <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                      이메일
+                  </p>
+                  <input
+                    v-model="email"
+                    type="email"
+                    placeholder="이메일을 입력해 주세요"
+                    class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
+                    readonly
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                      닉네임
+                  </p>
+                  <input
+                    v-model="username"
+                    type="text"
+                    placeholder="이름을 입력해 주세요"
+                    class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
+                    readonly
+                  />
+                </div>
+
+                <div class="mb-3">
+                  <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                      비밀번호
+                  </p>
+                  <input
+                    v-model="password"
+                    type="password"
+                    placeholder="영문자 숫자 포함 최소 8~20자"
+                    class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
+                  />
+                </div>
+                
+                <div class="mb-3">
+                  <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                      비밀번호 확인
+                  </p>
+                  <input
+                    v-model="passwordCheck"
+                    type="password"
+                    placeholder="비밀번호를 확인해 주세요"
+                    class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
+                  />
+                </div>
+
+                <div class="mb-6" style="width: 20%;">
+                  <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                    성별
+                  </p>
+                  <select v-model="gender" 
+                  class="bordder-[#E9EDF4] w-full rounded-md
+                  border bg-[#FCFDFE] py-3 px-5 text-base text-body-color
+                    placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none">
+                    <option value="Man">남자</option>
+                    <option value="Woman">여자</option>
+                  </select>
+                </div>
+
+                <!-- 주소 -->
+                <div>
+                  <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                      주소
+                  </p>
+                  <div class="mb-2" style="width: 50%; display: flex;">
+                    <input
+                      v-model="zonecode"
+                      type="text"
+                      placeholder="우편번호"
+                      class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
+                      readonly
+                    />
+                    <input type="button" 
+                    class="bordder-primary cursor-pointer rounded-md bg-primary py-3 px-5 mx-4 text-base text-white transition duration-300 hover:shadow-md"
+                    @click="extractAddress()" value="우편번호 찾기"><br>
+                  </div>
+
+                  <div class="mb-2" style="width: 60%;">
+                    <input
+                      v-model="roadAddress"
+                      type="text"
+                      placeholder="도로명주소"
+                      class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
+                      readonly
+                    />
+                  </div>
+
+                  <div class="mb-2" style="width: 60%;">
+                    <input
+                      v-model="jibunAddress"
+                      type="text"
+                      placeholder="지번주소"
+                      class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
+                      readonly
+                    />
+                  </div>
+                  <div class="mb-6" style="width:30%;">
+                    <input
+                      v-model="detailAddress"
+                      type="text"
+                      placeholder="상세주소"
+                      class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
+                    />
+                  </div>
               </div>
 
-              <div class="mb-4">
-                <input
-                  v-model="password"
-                  type="password"
-                  placeholder="영문자 숫자 포함 최소 8~20자"
-                  class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
-                />
-              </div>
+              
               <div class="mb-6">
-                <input
-                  v-model="passwordCheck"
-                  type="password"
-                  placeholder="비밀번호를 확인해 주세요"
-                  class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
-                />
-              </div>
-
-              <div class="mb-6">
-                <div class="filebox" style="display: flex">
+                <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                  프로필 사진
+                </p>
+                <div class="filebox" style="display: flex;">
                   <input
                     class="upload-name"
                     value="첨부파일"
@@ -67,9 +144,7 @@
               </div>
 
               <div class="mb-6">
-                <div style="margin : 20px 15px;">
                   <img id="userImage"/>
-                </div>
               </div>
 
               <div class="mb-10">
@@ -319,6 +394,11 @@ export default {
       username: "",
       password: "",
       passwordCheck: "",
+      zonecode: '',
+      roadAddress: '',
+      jibunAddress: '',
+      detailAddress: '',
+      gender: '',
     };
   },
   computed: {
@@ -335,6 +415,11 @@ export default {
         password: this.password,
         passwordCheck: this.passwordCheck,
         file: $('#file')[0].files[0],
+        zonecode: this.zonecode,
+        roadAddress: this.roadAddress,
+        jibunAddress: this.jibunAddress,
+        detailAddress: this.detailAddress,
+        gender: this.gender.toUpperCase(),
       })
       .then((res) => {
         console.log('회원 수정 완료',res);
@@ -342,7 +427,15 @@ export default {
         this.$router.push('/');
       })
       .catch((err) => {
-        console.log(err);
+        console.log('회원 수정 실패', err);
+        if (err.response.status == 401) {
+          console.log('권한이 없습니다. 메인페이지로 이동합니다.');
+          this.$router.push('/')
+        } 
+        else if (err.response.status == 500) {
+          console.log('서버 내부 오류 입니다. 잠시후에 다시 시도해 주세요.');
+          this.$router.push('/');
+        }
       });
     },
     previewFile() {
@@ -359,12 +452,40 @@ export default {
         reader.readAsDataURL(file);
       }
     },
+    extractAddress() {
+        new window.daum.Postcode({
+          oncomplete: (data) => {    
+            // console.log(data);
+            // console.log(this);
+            // 우편번호 입력
+            this.zonecode = data.zonecode;
+            // 도로명 주소 입력
+            if (data.roadAddress !== '') {
+              this.roadAddress = data.roadAddress;
+            } else {
+              this.roadAddress=  data.autoRoadAddress;
+            }
+            // 지번 주소 입력
+            if (data.jibunAddress !== '') {
+              this.jibunAddress = data.jibunAddress;
+            } else {
+              this.jibunAddress = data.autoJibunAddress;
+            }
+        }
+      }).open();
+    },
   },
   created() {
     this.$store.commit("SET_TITLE", this.title);
     console.log(this.getAuthentication);
     this.email = this.getAuthentication.email;
     this.username = this.getAuthentication.username;
+    this.gender = this.getAuthentication.gender === '남자' ? 'Man' : 'Woman';
+    this.zonecode = this.getAuthentication.zonecode;
+    this.roadAddress = this.getAuthentication.roadAddress;
+    this.jibunAddress = this.getAuthentication.jibunAddress;
+    this.detailAddress = this.getAuthentication.detailAddress;
+    
     let userProfileUrl = this.getAuthentication.thumbnail;
 
     if (userProfileUrl != undefined) {

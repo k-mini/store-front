@@ -125,7 +125,7 @@ import { mapGetters } from 'vuex';
             @click="changePage({
               page: 0,
               searchType: `${this.searchType}`,
-              searchKeyWord: `${this.searchKeyword}`
+              searchKeyword: `${this.searchKeyword}`
             })"
           class="relative z-[2] flex items-center rounded-r bg-primary px-4 py-1 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-primary-700 hover:shadow-lg focus:bg-primary-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-primary-800 active:shadow-lg"
           type="submit"
@@ -175,7 +175,7 @@ export default {
     },
     methods: {
       changePage(payload) {
-        this.$emit('changePage',payload);
+        this.$emit('changePage', payload);
       },
     },
 };

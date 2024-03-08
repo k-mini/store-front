@@ -4,7 +4,7 @@
       <div class="-mx-4 flex flex-wrap">
         <div class="w-full px-4">
           <div
-            class="wow fadeInUp relative mx-auto max-w-[525px] overflow-hidden rounded-lg bg-white py-14 px-8 text-center sm:px-12 md:px-[60px]"
+            class="wow fadeInUp relative mx-auto max-w-[780px] overflow-hidden rounded-lg bg-white py-14 px-8 text-center sm:px-12 md:px-[60px]"
             data-wow-delay=".15s"
           >
             <div class="mb-10 text-center">
@@ -16,7 +16,11 @@
               method="POST"
               v-on:submit.prevent="processJoin"
             >
-              <div class="mb-4">
+
+              <div class="mb-3">
+                <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                  이메일
+                </p>
                 <input
                   v-model="email"
                   type="email"
@@ -25,7 +29,10 @@
                 />
               </div>
 
-              <div class="mb-4">
+              <div class="mb-3">
+                <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                  닉네임
+                </p>
                 <input
                   v-model="username"
                   type="text"
@@ -34,7 +41,10 @@
                 />
               </div>
 
-              <div class="mb-4">
+              <div class="mb-3">
+                <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                  비밀번호
+                </p>
                 <input
                   v-model="password"
                   type="password"
@@ -43,7 +53,10 @@
                 />
               </div>
 
-              <div class="mb-6">
+              <div class="mb-3">
+                <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                  비밀번호 확인
+                </p>
                 <input
                   v-model="passwordCheck"
                   type="password"
@@ -52,25 +65,71 @@
                 />
               </div>
 
-              <div class="mb-6">
-                <select id="genders" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                  <option selected>성별</option>
+              <div class="mb-6" style="width: 20%;">
+                <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                  성별
+                </p>
+                <select v-model="gender" 
+                  class="bordder-[#E9EDF4] w-full rounded-md
+                  border bg-[#FCFDFE] py-3 px-5 text-base text-body-color
+                    placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none">
                   <option value="Man">남자</option>
                   <option value="Woman">여자</option>
                 </select>
               </div>
 
-              <div class="mb-6">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                  </svg>
+              <!-- 주소 -->
+              <div>
+                <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                    주소
+                </p>
+                <div class="mb-2" style="width: 50%; display: flex;">
+                  <input
+                    v-model="zonecode"
+                    type="text"
+                    placeholder="우편번호"
+                    class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
+                    readonly
+                  />
+                  <input type="button" 
+                  class="bordder-primary cursor-pointer rounded-md bg-primary py-3 px-5 mx-4 text-base text-white transition duration-300 hover:shadow-md"
+                  @click="extractAddress()" value="우편번호 찾기"><br>
                 </div>
-                <input datepicker type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+
+                <div class="mb-2" style="width: 60%;">
+                  <input
+                    v-model="roadAddress"
+                    type="text"
+                    placeholder="도로명주소"
+                    class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
+                    readonly
+                  />
+                </div>
+
+                <div class="mb-2" style="width: 60%;">
+                  <input
+                    v-model="jibunAddress"
+                    type="text"
+                    placeholder="지번주소"
+                    class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
+                    readonly
+                  />
+                </div>
+                <div class="mb-6" style="width:30%;">
+                  <input
+                    v-model="detailAddress"
+                    type="text"
+                    placeholder="상세주소"
+                    class="bordder-[#E9EDF4] w-full rounded-md border bg-[#FCFDFE] py-3 px-5 text-base text-body-color placeholder-[#ACB6BE] outline-none transition focus:border-primary focus-visible:shadow-none"
+                  />
+                </div>
               </div>
 
               <div class="mb-6">
-                <div class="filebox" style="display: flex">
+                <p class="py-3 px-1" style="text-align: left; font-size: 20px;">
+                  프로필 사진
+                </p>
+                <div class="filebox" style="display: flex;">
                   <input
                     class="upload-name"
                     value="첨부파일"
@@ -83,9 +142,7 @@
               </div>
 
               <div class="mb-6">
-                <div style="margin : 20px 15px;">
-                  <img id="userImage"/>
-                </div>
+                <img id="userImage"/>
               </div>
 
               <div class="mb-10">
@@ -96,68 +153,26 @@
                 />
               </div>
             </form>
-            <p class="mb-6 text-base text-[#adadad]">
+            <p class="mb-3 text-base text-[#adadad]">
               다른 계정으로 로그인하기
             </p>
-            <ul class="-mx-2 mb-12 flex justify-between">
-              <li class="w-full px-2">
-                <a
-                  href="javascript:void(0)"
-                  class="flex h-11 items-center justify-center rounded-md bg-[#4064AC] transition hover:bg-opacity-90"
-                >
-                  <svg
-                    width="10"
-                    height="20"
-                    viewBox="0 0 10 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9.29878 8H7.74898H7.19548V7.35484V5.35484V4.70968H7.74898H8.91133C9.21575 4.70968 9.46483 4.45161 9.46483 4.06452V0.645161C9.46483 0.290323 9.24343 0 8.91133 0H6.89106C4.70474 0 3.18262 1.80645 3.18262 4.48387V7.29032V7.93548H2.62912H0.747223C0.359774 7.93548 0 8.29032 0 8.80645V11.129C0 11.5806 0.304424 12 0.747223 12H2.57377H3.12727V12.6452V19.129C3.12727 19.5806 3.43169 20 3.87449 20H6.47593C6.64198 20 6.78036 19.9032 6.89106 19.7742C7.00176 19.6452 7.08478 19.4194 7.08478 19.2258V12.6774V12.0323H7.66596H8.91133C9.2711 12.0323 9.54785 11.7742 9.6032 11.3871V11.3548V11.3226L9.99065 9.09677C10.0183 8.87097 9.99065 8.6129 9.8246 8.35484C9.76925 8.19355 9.52018 8.03226 9.29878 8Z"
-                      fill="white"
-                    />
-                  </svg>
+            <div class="mb-6" style="display: flex;
+               align-items: center;
+               justify-content: center;
+               " >
+                <a href="#" 
+                onclick="window.open('/oauth2/authorization/kakao', '', 'width=500, height=600, top=200, left=200');">
+                  <img class='logo' src="../../assets/images/kakao.png" >
                 </a>
-              </li>
-              <li class="w-full px-2">
-                <a
-                  href="javascript:void(0)"
-                  class="flex h-11 items-center justify-center rounded-md bg-[#1C9CEA] transition hover:bg-opacity-90"
-                >
-                  <svg
-                    width="22"
-                    height="16"
-                    viewBox="0 0 22 16"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M19.5516 2.75538L20.9 1.25245C21.2903 0.845401 21.3968 0.53229 21.4323 0.375734C20.3677 0.939335 19.3742 1.1272 18.7355 1.1272H18.4871L18.3452 1.00196C17.4935 0.344423 16.429 0 15.2935 0C12.8097 0 10.8581 1.81605 10.8581 3.91389C10.8581 4.03914 10.8581 4.22701 10.8935 4.35225L11 4.97847L10.2548 4.94716C5.7129 4.82192 1.9871 1.37769 1.38387 0.782779C0.390323 2.34834 0.958064 3.85127 1.56129 4.79061L2.76774 6.54403L0.851613 5.6047C0.887097 6.91977 1.45484 7.95303 2.55484 8.7045L3.5129 9.33072L2.55484 9.67515C3.15806 11.272 4.50645 11.9296 5.5 12.18L6.8129 12.4932L5.57097 13.2446C3.58387 14.4971 1.1 14.4031 0 14.3092C2.23548 15.6869 4.89677 16 6.74194 16C8.12581 16 9.15484 15.8748 9.40322 15.7808C19.3387 13.7143 19.8 5.8865 19.8 4.32094V4.10176L20.0129 3.97652C21.2194 2.97456 21.7161 2.44227 22 2.12916C21.8935 2.16047 21.7516 2.22309 21.6097 2.2544L19.5516 2.75538Z"
-                      fill="white"
-                    />
-                  </svg>
+                <a href="#"
+                onclick="window.open('/oauth2/authorization/google', '', 'width=500, height=600, top=200, left=200');">
+                  <img class='logo' src="../../assets/images/google.png">
                 </a>
-              </li>
-              <li class="w-full px-2">
-                <a
-                  href="javascript:void(0)"
-                  class="flex h-11 items-center justify-center rounded-md bg-[#D64937] transition hover:bg-opacity-90"
-                >
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M17.8477 8.17132H9.29628V10.643H15.4342C15.1065 14.0743 12.2461 15.5574 9.47506 15.5574C5.95916 15.5574 2.8306 12.8821 2.8306 9.01461C2.8306 5.29251 5.81018 2.47185 9.47506 2.47185C12.2759 2.47185 13.9742 4.24567 13.9742 4.24567L15.7024 2.47185C15.7024 2.47185 13.3783 0.000145544 9.35587 0.000145544C4.05223 -0.0289334 0 4.30383 0 8.98553C0 13.5218 3.81386 18 9.44526 18C14.4212 18 17.9967 14.7141 17.9967 9.79974C18.0264 8.78198 17.8477 8.17132 17.8477 8.17132Z"
-                      fill="white"
-                    />
-                  </svg>
+                <a href="#"
+                onclick="window.open('/oauth2/authorization/github', '', 'width=500, height=600, top=200, left=200');">
+                  <img class='logo' src="../../assets/images/github.png">
                 </a>
-              </li>
-            </ul>
+              </div>
 
             <p class="text-base text-[#adadad]">
               이미 회원이신가요?
@@ -402,6 +417,11 @@ export default {
       username: '',
       password: '',
       passwordCheck: '',
+      zonecode: '',
+      roadAddress: '',
+      jibunAddress: '',
+      detailAddress: '',
+      gender: '',
     }
   },
   methods: {
@@ -416,6 +436,11 @@ export default {
         password: this.password,
         passwordCheck: this.passwordCheck,
         file: $('#file')[0].files[0],
+        zonecode: this.zonecode,
+        roadAddress: this.roadAddress,
+        jibunAddress: this.jibunAddress,
+        detailAddress: this.detailAddress,
+        gender: this.gender.toUpperCase(),
       })
       .then(() => {
         console.log('회원가입 성공');
@@ -439,6 +464,28 @@ export default {
         reader.readAsDataURL(file);
       }
     },
+    extractAddress() {
+        new window.daum.Postcode({
+          oncomplete: (data) => {    
+            // console.log(data);
+            // console.log(this);
+            // 우편번호 입력
+            this.zonecode = data.zonecode;
+            // 도로명 주소 입력
+            if (data.roadAddress !== '') {
+              this.roadAddress = data.roadAddress;
+            } else {
+              this.roadAddress=  data.autoRoadAddress;
+            }
+            // 지번 주소 입력
+            if (data.jibunAddress !== '') {
+              this.jibunAddress = data.jibunAddress;
+            } else {
+              this.jibunAddress = data.autoJibunAddress;
+            }
+        }
+      }).open();
+    },
   },
   beforeRouteUpdate() {
     $('#file').attr('src','');
@@ -457,34 +504,4 @@ export default {
 </script>
 
 <style>
-.filebox .upload-name {
-  display: inline-block;
-  height: 40px;
-  padding: 0 10px;
-  vertical-align: middle;
-  border: 1px solid #dddddd;
-  width: 78%;
-  color: #999999;
-}
-
-.filebox label {
-  display: inline-block;
-  padding: 10px 20px;
-  color: #fff;
-  vertical-align: middle;
-  background-color: #999999;
-  cursor: pointer;
-  width: 110px;
-  height: 40px;
-  margin-left: 10px;
-}
-
-.filebox input[type="file"] {
-  position: absolute;
-  width: 0;
-  height: 0;
-  padding: 0;
-  overflow: hidden;
-  border: 0;
-}
 </style>
