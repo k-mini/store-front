@@ -82,8 +82,15 @@ let router = createRouter({
     ]
 });
 
-function checkCategoryAndNext(categoryName, subCategoryName, next) {
-    let categoryMap = store.state.categoryMap;
+async function checkCategoryAndNext(categoryName, subCategoryName, next) {
+    let categoryMap = store.getters.getCategoryMap;
+    let categoryLoaed = store.state.categoryLoaded;
+
+    if (categoryLoaed == false) {
+        await store.dispatch('FETCH_CATEGORIES');
+        categoryMap = store.getters.getCategoryMap;
+    }
+
     if (categoryMap.get(categoryName.toUpperCase()) != undefined && categoryMap.get(subCategoryName.toUpperCase()) != undefined) {
         next();
     }

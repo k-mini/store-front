@@ -59,6 +59,11 @@ function createBoard(categoryName, subCategoryName, params) {
     // file part
     let file = params.file
     formData.append("file", file)
+    // itemImages part
+    let itemImages = params.files
+    for (var element of itemImages) {
+        formData.append("itemImages", element)
+    }
 
     return axios.post(`${config.baseUrl}/api/board/${categoryName}/${subCategoryName}`, formData, {
         headers: {
@@ -84,6 +89,11 @@ function updateBoard(categoryName, subCategoryName, boardId, params) {
     // file part
     let file = params.file;
     formData.append("file", file);
+    // itemImages part
+    let itemImages = params.files
+    for (var element of itemImages) {
+        formData.append("itemImages", element)
+    }
 
     return axios.patch(`${config.baseUrl}/api/board/${categoryName}/${subCategoryName}/${boardId}`, formData, {
         headers : {

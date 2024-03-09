@@ -1,22 +1,11 @@
 <template>
   <div>
-    <button
-      id="navbarToggler"
-      class="absolute right-4 top-1/2 block -translate-y-1/2 rounded-lg px-3 py-[6px] ring-primary focus:ring-2 lg:hidden"
-    >
-      <span class="relative my-[6px] block h-[2px] w-[30px] bg-white"></span>
-      <span class="relative my-[6px] block h-[2px] w-[30px] bg-white"></span>
-      <span class="relative my-[6px] block h-[2px] w-[30px] bg-white"></span>
-    </button>
     <nav
       id="navbarCollapse"
       class="absolute right-4 top-full hidden w-full max-w-[250px] rounded-lg bg-white py-5 shadow-lg lg:static lg:block lg:w-full lg:max-w-full lg:bg-transparent lg:py-0 lg:px-4 lg:shadow-none xl:px-6"
     >
       <ul class="blcok lg:flex">
         <li v-for="category in getCategories" :key= "category.categoryName" class="submenu-item group relative">
-
-
-
           <router-link
             v-if="category.categoryName != `ALL`"
             v-bind:to="`/boards/${category.categoryName.toLowerCase()}/all`"

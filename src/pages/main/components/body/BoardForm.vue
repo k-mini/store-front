@@ -84,8 +84,8 @@
                     placeholder="첨부파일"
                     readonly
                   />
-                  <label for="file">파일찾기</label>
-                  <input type="file" id="file" />
+                  <label for="files">파일찾기</label>
+                  <input type="file" id="files" multiple/>
                 </div>
 
                 <div style="margin: 20px 15px">
@@ -346,7 +346,7 @@
 
 <script>
 import $ from "jquery";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 import { fetchImage } from "../../api/boardApi";
 
 export default {
@@ -396,9 +396,11 @@ export default {
     },
   },
   methods: {
-    ...mapActions(["CREATE_BOARD", "UPDATE_BOARD"]),
+    ...mapActions(["CREATE_BOARD", "UPDATE_BOARD", "GET_PAGE_DETAIL"]),
+    ...mapMutations(['SET_PAGE_DETAIL']),
     saveBoard() {
-      let file = $("#file")[0].files[0];
+      let file = $("#files")[0].files[0];
+      let files = $("#files")[0].files;
       let category = this.categoryValue;
       let subCategory = this.subCategoryValue;
       let boardId = this.boardId;
@@ -406,6 +408,7 @@ export default {
         title: this.boardTitle,
         content: this.content,
         file: file,
+        files: files,
       };
 
       // 생성
@@ -429,41 +432,73 @@ export default {
           });
       }
     },
-  },
-  created() {
-    console.log("boardForm 시작");
-    this.$store.commit("SET_TITLE", this.title);
-    this.boardTitle = this.getPageDetail.title;
-    this.content = this.getPageDetail.content;
-    let thumbnailUrl = this.getPageDetail.boardThumbnail;
+    namingUploadFileName() {
+      var fileName = $("#files").val();
+      var fileList = $('#files')[0].files;
+      if (fileList.length == 1) {
+        $(".upload-name").val(fileName);
+      } else {
+        $(".upload-name").val(fileName + ' 외 ' + (fileList.length - 1) + '개' );
+      }
+    },
+    async initModifyingForm() {
+      if (this.getPageDetail == null) {
+        console.log('상세정보가 없으므로 로딩합니다.');
+        await this.GET_PAGE_DETAIL({
+          category: this.$route.params.category,
+          subCategory: this.$route.params.subCategory,
+          boardId: this.$route.params.boardId,
+        });
+      }
+      this.boardTitle = this?.getPageDetail?.title;
+      this.content = this?.getPageDetail?.content;
+      this.categoryValue = this.$route.params.category;
+      this.subCategoryValue = this.$route.params.subCategory;
+      let thumbnailUrl = this?.getPageDetail?.boardThumbnail;
 
-    if (thumbnailUrl != undefined) {
-      let url = `http://localhost:9090/images/${thumbnailUrl}`;
-      fetchImage(thumbnailUrl).then((res) => {
-        let ext = url.split(".").pop();
-        let fileName = url.split("/").pop();
-        let file = new File([res], fileName, { type: `image/${ext}` });
+      if (thumbnailUrl != undefined) {
+        let url = `http://localhost:9090/images/${thumbnailUrl}`;
+        fetchImage(thumbnailUrl).then((res) => {
+          let ext = url.split(".").pop();
+          let fileName = url.split("/").pop();
+          let file = new File([res], fileName, { type: `image/${ext}` });
 
-        const dataTransfer = new DataTransfer();
-        dataTransfer.items.add(file);
+          const dataTransfer = new DataTransfer();
+          dataTransfer.items.add(file);
 
-        // fileList 등록
-        $("#file")[0].files = dataTransfer.files;
+          // fileList 등록
+          $("#files")[0].files = dataTransfer.files;
 
-        // filePath 등록
-        let filePath = $("#file").val();
-        $(".upload-name").val(filePath);
-        $("#fileImage").attr("src", url);
-      });
-    }
+          // filePath 등록
+          let filePath = $("#files").val();
+          $(".upload-name").val(filePath);
+          $("#fileImage").attr("src", url);
+        });
+      }
+    },
+    initNewWritingForm() {
+      this.categoryValue = this.$route.params.category;
+      this.subCategoryValue = this.$route.params.subCategory;
+      this.SET_PAGE_DETAIL(null);
+    },
   },
   mounted() {
+    console.log("boardForm 시작");
     // file input 변경 될 때 마다 파일 이름 이벤트
-    $("#file").on("change", function () {
-      var fileName = $("#file").val();
-      $(".upload-name").val(fileName);
+    $("#files").on("change", () => {
+      this.namingUploadFileName();
     });
+
+    let boardId = this.$route.params.boardId;
+    if (boardId != null) {
+      this.initModifyingForm();
+    } else {
+      this.initNewWritingForm();
+    }
   },
+  beforeRouteLeave() {
+    $('#files').val(null);
+  }
 };
 </script>
 

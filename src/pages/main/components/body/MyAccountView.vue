@@ -450,6 +450,8 @@ export default {
 
       if (file) {
         reader.readAsDataURL(file);
+      } else {
+        preview.attr('src', '');
       }
     },
     extractAddress() {
@@ -550,6 +552,10 @@ export default {
   padding: 0;
   overflow: hidden;
   border: 0;
+}
+
+#userImage {
+  border-radius: 10px;
 }
 </style>
 

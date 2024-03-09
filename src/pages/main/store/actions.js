@@ -64,6 +64,7 @@ export default {
         console.log(response.data);
         context.commit('SET_CATEGORIES', response.data);
         context.commit('SET_CATEGORYMAP', map);
+        context.commit('SET_CATEGORY_LOADED', true);
         return response;
     },
 

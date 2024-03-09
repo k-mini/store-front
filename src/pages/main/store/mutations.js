@@ -3,6 +3,9 @@ export default {
     SET_CATEGORIES(state, categories) {
         state.categories = categories;
     },
+    SET_CATEGORY_LOADED(state) {
+        state.categoryLoaded = true;
+    },
     SET_TITLE(state, title) {
         state.title = title;
     },

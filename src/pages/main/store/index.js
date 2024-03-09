@@ -7,9 +7,10 @@ export const store = createStore({
     state: {
         categories: [],
         categoryMap: {},
+        categoryLoaded: false,
         title: "",
         pageResult: {},
-        pageDetail: {},
+        pageDetail: null,
         authentication: null,
         isAuthenticated: false,
     },
