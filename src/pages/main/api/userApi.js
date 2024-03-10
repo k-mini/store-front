@@ -36,6 +36,7 @@ function processJoin(params) {
         jibunAddress: params.jibunAddress,
         detailAddress: params.detailAddress,
         gender: params.gender,
+        reCaptChaToken: params.reCaptChaToken,
     }
     let blob = new Blob([JSON.stringify(userSaveReqApiDto)], { type: "application/json"});
     formData.append("userSaveReqApiDto", blob);

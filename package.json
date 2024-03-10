@@ -29,6 +29,7 @@
     "jquery.easing": "^1.4.1",
     "jszip": "^3.10.1",
     "pdfmake": "^0.2.9",
+    "recaptcha-v3": "^1.10.0",
     "roboto-fontface": "*",
     "vue": "^3.2.13",
     "vue-chartjs": "^5.3.0",

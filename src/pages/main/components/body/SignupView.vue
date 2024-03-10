@@ -409,6 +409,8 @@
 <script>
 import $ from 'jquery';
 import { mapActions } from 'vuex';
+import { load } from 'recaptcha-v3';
+
 export default {
   props: ['title'],
   data() {
@@ -422,14 +424,17 @@ export default {
       jibunAddress: '',
       detailAddress: '',
       gender: '',
+      reCaptChaToken: '',
     }
   },
   methods: {
     ...mapActions(['PROCESS_JOIN']),
-    processJoin() {
+    async processJoin() {
       // console.log('processJoin 호출');
       // console.log(this.email, this.username, this.password, 
       //   this.passwordCheck, $('#file')[0].files[0] );
+      await this.fetchReCaptChaToken();
+
       this.PROCESS_JOIN({
         email: this.email, 
         username: this.username, 
@@ -441,6 +446,7 @@ export default {
         jibunAddress: this.jibunAddress,
         detailAddress: this.detailAddress,
         gender: this.gender.toUpperCase(),
+        reCaptChaToken : this.reCaptChaToken,
       })
       .then(() => {
         console.log('회원가입 성공');
@@ -485,6 +491,15 @@ export default {
             }
         }
       }).open();
+    },
+    fetchReCaptChaToken() {
+      // reCAPTCHA
+      load('6Lcxm5MpAAAAAJB8K-373tgGZK8Ygc5BJCnMwueA').then((recaptcha) => {
+        recaptcha.execute('login').then((token) => {
+          // console.log('reCAPTCHA 토큰 생성 완료',token);
+          this.reCaptChaToken = token;
+        })
+      })
     },
   },
   beforeRouteUpdate() {
