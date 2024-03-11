@@ -165,6 +165,11 @@
                     @click="nextEvent">다음</div>
                   </div>
                 </div>
+
+                <div class="kakaoMapWrapper">
+                  <div id="kakaoMap" style="height: 400px;">
+                  </div>
+                </div>
                 
                 <div class="mx-4">
                 <p
@@ -551,12 +556,14 @@ import {
   replyToggle,
   updateToggle,
 } from "../../api/commentApi";
+// import { initKakaoMap, initMap } from '../../api/kakaoMapApi';
 
 export default {
   data() {
     return {
       // CAROUSEL_LENGTH: 0,
       current: 0,
+      kakaoMapLoaded: false,
     };
   },
   computed: {
@@ -611,7 +618,30 @@ export default {
         $carousel.style.transform = `translateX(${CAROUSEL_LENGTH * -600}px)`;
       }
     },
+    initMap() {
+      let currentLatitude = this.getPageDetail.latitude;
+      let currentLongitude = this.getPageDetail.longitude;
+      if (currentLatitude == null || currentLongitude == null) {
+        return;
+      }
+      const container = document.getElementById("kakaoMap");
+      const options = {
+        center: new window.kakao.maps.LatLng(currentLatitude, currentLongitude),
+        level: 5,
+      };
 
+      //지도 객체를 등록합니다.
+      //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
+      this.map = new window.kakao.maps.Map(container, options);
+
+      // 마커 생성
+      var marker = new window.kakao.maps.Marker({
+        position: this.map.getCenter()
+      });
+      // 지도에 마커 표시
+      marker.setMap(this.map);
+
+    },
   },
   beforeRouteUpdate(to, from, next) {
     this.GET_PAGE_DETAIL({
@@ -627,20 +657,30 @@ export default {
   },
   created() {
     console.log('boardDetail 시작');
-    this.GET_PAGE_DETAIL({
+  },
+  async mounted() {
+    console.log('mounted');
+    // this.CAROUSEL_LENGTH = document.querySelectorAll(".gallery-wrapper img").length - 1;
+    // console.log('현재 갤러리 이미지 개수',this.CAROUSEL_LENGTH + 1);
+
+    this.interval = setInterval(this.nextBtnClick,5000);
+
+    await this.GET_PAGE_DETAIL({
       category: this.$route.params.categoryName,
       subCategory: this.$route.params.subCategoryName,
       boardId: this.$route.params.boardId,
     });
-  },
-  mounted() {
-    console.log('mounted');
-    // this.CAROUSEL_LENGTH = document.querySelectorAll(".gallery-wrapper img").length - 1;
-    // console.log('현재 갤러리 이미지 개수',this.CAROUSEL_LENGTH + 1);
-    // $('.gallery-wrapper div img').attr('width',$('.gallery-wrapper').width());
-    // $('.gallery-wrapper div img').attr('height',$('.gallery-wrapper').height());
 
-    this.interval = setInterval(this.nextBtnClick,5000);
+    // 카카오 맵 초기화
+    if (window.kakao && window.kakao.maps) {
+      this.initMap();
+    } else {
+      const script = document.createElement("script");
+      script.onload = () => window.kakao.maps.load(this.initMap);
+      script.src =
+        "//dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=0d26c55d5640d7a6d3fc46625ee781a6";
+      document.head.appendChild(script);
+    }
   }
 };
   

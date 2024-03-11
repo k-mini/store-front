@@ -51,6 +51,8 @@ function createBoard(categoryName, subCategoryName, params) {
         title: params.title,
         content: params.content,
         itemName: params.itemName,
+        latitude: params.latitude,
+        longitude: params.longitude,
     }
     formData.append("itemBoardSaveReqApiDto", 
         new Blob([JSON.stringify(itemBoardSaveReqApiDto)], { type: "application/json" })

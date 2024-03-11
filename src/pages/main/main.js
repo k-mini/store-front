@@ -4,7 +4,9 @@ import { store } from './store/index';
 import { router } from './routes/index';
 
 
-createApp(App)
+var app = createApp(App)
+window.app = app;
+    app
     .use(store)
     .use(router)
     .mount('#app');
